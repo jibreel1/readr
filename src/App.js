@@ -30,9 +30,11 @@ const App = () => {
       });
    };
 
-   onAuthStateChanged(auth, currentUser => {
-      setUser(currentUser);
-   });
+   useEffect(() => {
+      onAuthStateChanged(auth, currentUser => {
+         setUser(currentUser);
+      });
+   }, []);
 
    const booksCollectionRef = collection(db, "books");
 
@@ -56,6 +58,7 @@ const App = () => {
                   <Login
                      signInWithGoogle={signInWithGoogle}
                      setIsAuth={setIsAuth}
+                     isAuth={isAuth}
                   />
                }
             />
@@ -65,6 +68,7 @@ const App = () => {
                   <SignUp
                      signInWithGoogle={signInWithGoogle}
                      setIsAuth={setIsAuth}
+                     isAuth={isAuth}
                   />
                }
             />
@@ -74,7 +78,10 @@ const App = () => {
                <WithNav isAuth={isAuth} setIsAuth={setIsAuth} user={user} />
             }
          >
-            <Route path="/" element={<Home books={books} />} />
+            <Route
+               path="/"
+               element={<Home books={books} loading={loading} />}
+            />
             <Route path="/ebooks" element={<Ebooks />} />
          </Route>
       </Routes>

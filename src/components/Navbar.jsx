@@ -8,7 +8,7 @@ import SideBar from "./SideBar";
 import LoginDropDown from "./LoginDropDown";
 
 const Navbar = ({ links, isAuth, setIsAuth, user }) => {
-   console.log(isAuth);
+   // console.log(isAuth);
    const [showSideBar, setShowSideBar] = useState(false);
    const [showLoginLinks, setShowLoginLinks] = useState(false);
    const location = useLocation();
@@ -69,8 +69,6 @@ const Navbar = ({ links, isAuth, setIsAuth, user }) => {
                position="relative"
                onClick={() => {
                   setShowLoginLinks(!showLoginLinks);
-                  // setShowMenubar(false);
-                  // setShowCart(false);
                }}
             >
                {isAuth && (

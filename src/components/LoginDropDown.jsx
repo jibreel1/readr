@@ -10,7 +10,6 @@ const LoginDropDown = ({
    setIsAuth,
    user,
 }) => {
-   //    console.log(user);
    let navigate = useNavigate();
 
    const signUserOut = () => {
@@ -48,7 +47,7 @@ const LoginDropDown = ({
       <Box className={`drop-down ${showLoginLinks === true ? "active" : ""}`}>
          <Typography borderBottom="1px solid #ccc" pb="8px">
             <Typography component="span" color="#0162af" fontWeight="700">
-               {user.email}
+               {user?.displayName || "User"}
             </Typography>{" "}
             is logged in
          </Typography>

@@ -1,31 +1,61 @@
-import { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+   Box,
+   Typography,
+   TextField,
+   FormControl,
+   OutlinedInput,
+   InputAdornment,
+   IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase-config";
 import Book from "../assets/books.jpg";
 
-const SignUp = ({ signInWithGoogle, setIsAuth }) => {
+const SignUp = ({ signInWithGoogle, setIsAuth, isAuth }) => {
    const [registerName, setRegisterName] = useState("");
    const [registerEmail, setRegisterEmail] = useState("");
    const [registerPassword, setRegisterPassword] = useState("");
+   const [showPassword, setShowPassword] = useState("");
+   const [error, setError] = useState(false);
 
    let navigate = useNavigate();
 
    const register = async () => {
       try {
+         if (registerName === "") {
+            setError(true);
+            return false;
+         }
          const user = await createUserWithEmailAndPassword(
             auth,
             registerEmail,
             registerPassword
          );
+         updateProfile(auth.currentUser, {
+            displayName: registerName,
+         });
+
          localStorage.setItem("isAuth", true);
          setIsAuth(true);
          console.log(user);
          navigate("/");
       } catch (error) {
          console.log(error.message);
+         setError(true);
       }
+   };
+
+   useEffect(() => {
+      if (isAuth) {
+         navigate("/");
+      } // eslint-disable-next-line
+   }, []);
+
+   const handleClickShowPassword = () => {
+      setShowPassword(!showPassword);
    };
 
    const hoverBox = {
@@ -68,23 +98,40 @@ const SignUp = ({ signInWithGoogle, setIsAuth }) => {
                </Typography>
                <Box width="100%">
                   <Typography fontWeight="700" mb="10px">
-                     Name<sup>*</sup>
+                     Username<sup>*</sup>
                   </Typography>
-                  <input
-                     type="text"
-                     placeholder="Name"
-                     onChange={event => {
-                        setRegisterName(event.target.value);
+                  <TextField
+                     sx={{
+                        ".MuiInputBase-root": {
+                           borderRadius: "30px",
+                        },
                      }}
+                     placeholder="Enter your desired username"
+                     label="Username"
+                     required
+                     fullWidth
+                     onChange={event => {
+                        setRegisterName(event.target.value) === ""
+                           ? setError(true)
+                           : setError(false);
+                     }}
+                     error={error}
+                     helperText={error && "Input a name!!"}
                   />
                </Box>
                <Box my="20px" width="100%">
                   <Typography fontWeight="700" mb="10px">
                      Email<sup>*</sup>
                   </Typography>
-                  <input
-                     type="text"
+                  <TextField
+                     sx={{
+                        ".MuiInputBase-root": {
+                           borderRadius: "30px",
+                        },
+                     }}
                      placeholder="mail@email.com"
+                     label="Email"
+                     fullWidth
                      onChange={event => {
                         setRegisterEmail(event.target.value);
                      }}
@@ -94,13 +141,34 @@ const SignUp = ({ signInWithGoogle, setIsAuth }) => {
                   <Typography fontWeight="700" mb="10px">
                      Password<sup>*</sup>
                   </Typography>
-                  <input
-                     type="password"
-                     placeholder="min 8 character"
-                     onChange={event => {
-                        setRegisterPassword(event.target.value);
-                     }}
-                  />
+                  <FormControl sx={{ width: "100%" }} variant="outlined">
+                     <OutlinedInput
+                        placeholder="Enter password"
+                        type={showPassword ? "text" : "password"}
+                        sx={{ borderRadius: "30px" }}
+                        onChange={event => {
+                           setRegisterPassword(event.target.value);
+                        }}
+                        endAdornment={
+                           <InputAdornment position="end">
+                              <IconButton
+                                 aria-label="toggle password visibility"
+                                 onClick={handleClickShowPassword}
+                                 edge="end"
+                              >
+                                 {showPassword ? (
+                                    <VisibilityOff />
+                                 ) : (
+                                    <Visibility />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        }
+                        label="Password"
+                        error={error}
+                        helpertext={error && "Recheck your Email and Password"}
+                     />
+                  </FormControl>
                </Box>
                <Box
                   bgcolor="#0162af"

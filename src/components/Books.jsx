@@ -14,11 +14,11 @@ const Books = ({ books }) => {
          >
             Popular Books
          </Typography>
-         {books.map(book => (
+         {/* {books.map(book => (
             <Box key={book.id}>
                <img src={book.coverPage} alt={book.title} />
             </Box>
-         ))}
+         ))} */}
       </Box>
    );
 };

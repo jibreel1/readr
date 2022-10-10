@@ -1,30 +1,48 @@
-import { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+   Box,
+   Typography,
+   TextField,
+   FormControl,
+   OutlinedInput,
+   InputAdornment,
+   IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
 import Book from "../assets/spidyBook.jpg";
 
-const Login = ({ signInWithGoogle, setIsAuth }) => {
+const Login = ({ signInWithGoogle, setIsAuth, isAuth }) => {
    const [loginEmail, setLoginEmail] = useState("");
    const [loginPassword, setLoginPassword] = useState("");
+   const [showPassword, setShowPassword] = useState("");
+   const [error, setError] = useState(false);
 
    let navigate = useNavigate();
 
    const login = async () => {
       try {
-         const user = await signInWithEmailAndPassword(
-            auth,
-            loginEmail,
-            loginPassword
-         );
+         await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
          localStorage.setItem("isAuth", true);
          setIsAuth(true);
-         console.log(user);
+         // console.log(user);
          navigate("/");
       } catch (error) {
          console.log(error.message);
+         setError(true);
       }
+   };
+
+   useEffect(() => {
+      if (isAuth) {
+         navigate("/");
+      } // eslint-disable-next-line
+   }, []);
+
+   const handleClickShowPassword = () => {
+      setShowPassword(!showPassword);
    };
 
    const hoverBox = {
@@ -34,6 +52,7 @@ const Login = ({ signInWithGoogle, setIsAuth }) => {
          boxShadow: "0px 3px 6px #aaa",
       },
    };
+
    return (
       <Box className="login">
          <div className="login-content">
@@ -69,25 +88,54 @@ const Login = ({ signInWithGoogle, setIsAuth }) => {
                   <Typography fontWeight="700" mb="10px">
                      Email <sup>*</sup>
                   </Typography>
-                  <input
-                     type="text"
+                  <TextField
+                     sx={{
+                        ".MuiInputBase-root": {
+                           borderRadius: "30px",
+                        },
+                     }}
                      placeholder="mail@email.com"
+                     label="Email"
+                     fullWidth
                      onChange={event => {
                         setLoginEmail(event.target.value);
                      }}
+                     helperText={error && "Recheck your Email and Password"}
+                     error={error}
                   />
                </Box>
                <Box my="20px" width="100%">
                   <Typography fontWeight="700" mb="10px">
                      Password <sup>*</sup>
                   </Typography>
-                  <input
-                     type="password"
-                     placeholder="Enter password"
-                     onChange={event => {
-                        setLoginPassword(event.target.value);
-                     }}
-                  />
+                  <FormControl sx={{ width: "100%" }} variant="outlined">
+                     <OutlinedInput
+                        placeholder="Enter password"
+                        type={showPassword ? "text" : "password"}
+                        sx={{ borderRadius: "30px" }}
+                        onChange={event => {
+                           setLoginPassword(event.target.value);
+                        }}
+                        endAdornment={
+                           <InputAdornment position="end">
+                              <IconButton
+                                 aria-label="toggle password visibility"
+                                 onClick={handleClickShowPassword}
+                                 edge="end"
+                              >
+                                 {showPassword ? (
+                                    <VisibilityOff />
+                                 ) : (
+                                    <Visibility />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        }
+                        label="Password"
+                        error={error}
+                        helpertext={error && "Recheck your Email and Password"}
+                     />
+                  </FormControl>
                </Box>
                <Typography color="#0162af" fontWeight="700" textAlign="right">
                   <Link to="/signup">Forgot Password?</Link>
