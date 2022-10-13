@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import BookCard from "./BookCard";
 
 const Books = ({ books }) => {
    return (
@@ -14,11 +15,9 @@ const Books = ({ books }) => {
          >
             Popular Books
          </Typography>
-         {/* {books.map(book => (
-            <Box key={book.id}>
-               <img src={book.coverPage} alt={book.title} />
-            </Box>
-         ))} */}
+         {books.map(book => (
+            <BookCard book={book} key={book.id}/>
+         ))}
       </Box>
    );
 };

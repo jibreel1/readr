@@ -71,26 +71,25 @@ li {
 
 .sidebar {
    position: fixed;
-   top: -100%;
-   right: 0;
+   top: 0;
+   right: -260px;
    background-color: $color-white;
-   width: 100%;
+   width: 250px;
    height: 100vh;
    display: flex;
-   justify-content: center;
-   align-items: center;
+   align-items: flex-start;
    flex-direction: column;
    gap: 50px;
    transition: 0.5s ease-in-out;
    z-index: 4;
+   padding: 100px 0 0 20px;
 
    &.active {
-      top: 0;
+      right: 0;
    }
 
    &_links {
       display: flex;
-      align-items: center;
       list-style: none;
       flex-direction: column;
       color: $color-main;
@@ -382,5 +381,14 @@ h2 {
 
    &.active {
       top: 90px;
+   }
+}
+
+.book {
+   &-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
    }
 }

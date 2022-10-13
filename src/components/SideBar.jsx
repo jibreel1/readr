@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CloseOutlined } from "@mui/icons-material";
 
-const SideBar = ({ toggle, links, showSideBar }) => {
+const SideBar = ({ toggle, links, showSideBar, isAuth }) => {
    return (
       <Box
          sx={{ display: { sm: "none" } }}
@@ -18,22 +18,24 @@ const SideBar = ({ toggle, links, showSideBar }) => {
                </li>
             ))}
          </ul>
-         <Box
-            className="btn"
-            sx={{
-               bgcolor: "#0162af",
-               px: "30px",
-               py: "15px",
-               color: "#fff",
-               fontSize: "20px",
-               fontWeight: "500",
-               cursor: "pointer",
-               borderRadius: "30px",
-            }}
-            onClick={toggle}
-         >
-            <Link to="/login">Sign In</Link>
-         </Box>
+         {!isAuth && (
+            <Box
+               className="btn"
+               sx={{
+                  bgcolor: "#0162af",
+                  px: "30px",
+                  py: "15px",
+                  color: "#fff",
+                  fontSize: "20px",
+                  fontWeight: "500",
+                  cursor: "pointer",
+                  borderRadius: "30px",
+               }}
+               onClick={toggle}
+            >
+               <Link to="/login">Sign In</Link>
+            </Box>
+         )}
       </Box>
    );
 };

@@ -110,6 +110,7 @@ const Navbar = ({ links, isAuth, setIsAuth, user }) => {
             toggle={toggleSidebar}
             links={links}
             showSideBar={showSideBar}
+            isAuth={isAuth}
          />
          <LoginDropDown
             showLoginLinks={showLoginLinks}
