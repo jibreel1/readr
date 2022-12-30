@@ -1,7 +1,7 @@
 // import { useEffect } from "react";
 import { Box, Typography, TextField, Badge, Avatar } from "@mui/material";
 import { NotificationsNone } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { auth } from "../firebase-config";
 import Logo from "../assets/logo.png";
 
