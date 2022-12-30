@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Ebooks from "./pages/Ebooks";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Dashboard from "./pages/Dashboard";
+import EbookReader from "./pages/EbookReader";
 import WithoutNav from "./components/WithoutNav";
 import WithNav from "./components/WithNav";
 
@@ -16,7 +18,6 @@ import "./styles.scss";
 
 const App = () => {
    const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
-   // const [isAuth, setIsAuth] = useState(false);
    const [user, setUser] = useState({});
    const [books, setBooks] = useState([]);
    const [loading, setLoading] = useState(false);
@@ -72,6 +73,11 @@ const App = () => {
                   />
                }
             />
+            <Route
+               path="/dashboard"
+               element={<Dashboard user={user} isAuth={isAuth} />}
+            />
+            <Route path="/book/:id" element={<EbookReader books={books} />} />
          </Route>
          <Route
             element={
