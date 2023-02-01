@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Avatar } from "@mui/material";
 import { auth } from "../firebase-config";
@@ -6,11 +6,13 @@ import { SearchOutlined, MenuOutlined } from "@mui/icons-material";
 import Logo from "../assets/logo.png";
 import SideBar from "./SideBar";
 import LoginDropDown from "./LoginDropDown";
+import { AuthContext } from "../context/AuthContext";
 
-const Navbar = ({ links, isAuth, setIsAuth, user }) => {
+const Navbar = ({ links }) => {
    // console.log(isAuth);
    const [showSideBar, setShowSideBar] = useState(false);
    const [showLoginLinks, setShowLoginLinks] = useState(false);
+   const { currentUser } = useContext(AuthContext);
    const location = useLocation();
 
    const toggleSidebar = () => {
@@ -71,7 +73,7 @@ const Navbar = ({ links, isAuth, setIsAuth, user }) => {
                   setShowLoginLinks(!showLoginLinks);
                }}
             >
-               {isAuth && (
+               {currentUser && (
                   <Avatar
                      src={auth?.currentUser?.photoURL}
                      referrerPolicy="no-referrer"
@@ -87,7 +89,7 @@ const Navbar = ({ links, isAuth, setIsAuth, user }) => {
                   setShowLoginLinks(false);
                }}
             />
-            {!isAuth && (
+            {!currentUser && (
                <Box
                   className="btn"
                   sx={{
@@ -110,14 +112,10 @@ const Navbar = ({ links, isAuth, setIsAuth, user }) => {
             toggle={toggleSidebar}
             links={links}
             showSideBar={showSideBar}
-            isAuth={isAuth}
          />
          <LoginDropDown
             showLoginLinks={showLoginLinks}
             setShowLoginLinks={setShowLoginLinks}
-            isAuth={isAuth}
-            setIsAuth={setIsAuth}
-            user={user}
          />
       </Box>
    );

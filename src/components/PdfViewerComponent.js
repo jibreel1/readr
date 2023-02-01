@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Box } from "@mui/material";
 
-export default function PdfViewerComponent({ document }) {
+const PdfViewerComponent = ({ document }) => {
    const containerRef = useRef(null);
 
    useEffect(() => {
@@ -43,4 +43,6 @@ export default function PdfViewerComponent({ document }) {
          flex="2"
       />
    );
-}
+};
+
+export default PdfViewerComponent;

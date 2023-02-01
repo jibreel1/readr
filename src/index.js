@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { BrowserRouter as Router } from "react-router-dom";
+import { AuthContextProvider } from "./context/AuthContext";
 
 import App from "./App";
 
@@ -14,9 +15,11 @@ const theme = createTheme({
 });
 
 root.render(
-   <Router>
-      <ThemeProvider theme={theme}>
-         <App />
-      </ThemeProvider>
-   </Router>
+   <AuthContextProvider>
+      <Router>
+         <ThemeProvider theme={theme}>
+            <App />
+         </ThemeProvider>
+      </Router>
+   </AuthContextProvider>
 );

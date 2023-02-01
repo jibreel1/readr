@@ -1,21 +1,22 @@
+import { useContext } from "react";
 import { Box, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
 
 const LoginDropDown = ({
    showLoginLinks,
    setShowLoginLinks,
-   setIsAuth,
-   user,
+   // setIsAuth,
+   // user,
 }) => {
    let navigate = useNavigate();
 
+   const { currentUser } = useContext(AuthContext);
+
    const signUserOut = () => {
       signOut(auth).then(() => {
-         localStorage.removeItem("isAuth");
-         setIsAuth(false);
          navigate("/login");
       });
    };
@@ -47,7 +48,7 @@ const LoginDropDown = ({
       <Box className={`drop-down ${showLoginLinks === true ? "active" : ""}`}>
          <Typography borderBottom="1px solid #ccc" pb="8px">
             <Typography component="span" color="#0162af" fontWeight="700">
-               {user?.displayName || "User"}
+               {currentUser?.displayName || "User"}
             </Typography>{" "}
             is logged in
          </Typography>

@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CloseOutlined } from "@mui/icons-material";
+import { AuthContext } from "../context/AuthContext";
 
 const SideBar = ({ toggle, links, showSideBar, isAuth }) => {
+   const { currentUser } = useContext(AuthContext);
    return (
       <Box
          sx={{ display: { sm: "none" } }}
@@ -18,7 +21,7 @@ const SideBar = ({ toggle, links, showSideBar, isAuth }) => {
                </li>
             ))}
          </ul>
-         {!isAuth && (
+         {!currentUser && (
             <Box
                className="btn"
                sx={{

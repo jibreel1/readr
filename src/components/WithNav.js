@@ -27,12 +27,7 @@ const WithNav = ({ isAuth, setIsAuth, user }) => {
    ];
    return (
       <>
-         <NavBar
-            links={links}
-            isAuth={isAuth}
-            setIsAuth={setIsAuth}
-            user={user}
-         />
+         <NavBar links={links} />
          <Outlet />
          <Footer links={links} />
       </>

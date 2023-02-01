@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 import { collection, getDocs } from "firebase/firestore";
 import { db, auth, provider } from "./firebase-config";
-import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
-
+import { signInWithPopup } from "firebase/auth";
+import { AuthContext } from "./context/AuthContext";
 import Home from "./pages/Home";
 import Ebooks from "./pages/Ebooks";
 import Login from "./pages/Login";
@@ -17,25 +17,23 @@ import WithNav from "./components/WithNav";
 import "./styles.scss";
 
 const App = () => {
-   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
-   const [user, setUser] = useState({});
    const [books, setBooks] = useState([]);
    const [loading, setLoading] = useState(false);
+   const { currentUser } = useContext(AuthContext);
    let navigate = useNavigate();
+
+   const ProtectedRoute = ({ children }) => {
+      if (!currentUser) {
+         return <Navigate to="/login" />;
+      }
+      return children;
+   };
 
    const signInWithGoogle = () => {
       signInWithPopup(auth, provider).then(result => {
-         localStorage.setItem("isAuth", true);
-         setIsAuth(true);
          navigate("/");
       });
    };
-
-   useEffect(() => {
-      onAuthStateChanged(auth, currentUser => {
-         setUser(currentUser);
-      });
-   }, []);
 
    const booksCollectionRef = collection(db, "books");
 
@@ -55,38 +53,23 @@ const App = () => {
          <Route element={<WithoutNav />}>
             <Route
                path="/login"
-               element={
-                  <Login
-                     signInWithGoogle={signInWithGoogle}
-                     setIsAuth={setIsAuth}
-                     isAuth={isAuth}
-                  />
-               }
+               element={<Login signInWithGoogle={signInWithGoogle} />}
             />
             <Route
                path="/signup"
-               element={
-                  <SignUp
-                     signInWithGoogle={signInWithGoogle}
-                     setIsAuth={setIsAuth}
-                     isAuth={isAuth}
-                  />
-               }
+               element={<SignUp signInWithGoogle={signInWithGoogle} />}
             />
-            <Route
-               path="/dashboard"
-               element={<Dashboard user={user} isAuth={isAuth} />}
-            />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/book/:id" element={<EbookReader books={books} />} />
          </Route>
-         <Route
-            element={
-               <WithNav isAuth={isAuth} setIsAuth={setIsAuth} user={user} />
-            }
-         >
+         <Route element={<WithNav />}>
             <Route
                path="/"
-               element={<Home books={books} loading={loading} />}
+               element={
+                  <ProtectedRoute>
+                     <Home books={books} loading={loading} />
+                  </ProtectedRoute>
+               }
             />
             <Route path="/ebooks" element={<Ebooks />} />
          </Route>

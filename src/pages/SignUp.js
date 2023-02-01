@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
    Box,
    Typography,
@@ -13,13 +13,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase-config";
 import Book from "../assets/books.jpg";
+import { AuthContext } from "../context/AuthContext";
 
-const SignUp = ({ signInWithGoogle, setIsAuth, isAuth }) => {
+const SignUp = ({ signInWithGoogle }) => {
    const [registerName, setRegisterName] = useState("");
    const [registerEmail, setRegisterEmail] = useState("");
    const [registerPassword, setRegisterPassword] = useState("");
    const [showPassword, setShowPassword] = useState("");
    const [error, setError] = useState(false);
+   const { currentUser } = useContext(AuthContext);
 
    let navigate = useNavigate();
 
@@ -38,8 +40,8 @@ const SignUp = ({ signInWithGoogle, setIsAuth, isAuth }) => {
             displayName: registerName,
          });
 
-         localStorage.setItem("isAuth", true);
-         setIsAuth(true);
+         // localStorage.setItem("isAuth", true);
+         // setIsAuth(true);
          console.log(user);
          navigate("/");
       } catch (error) {
@@ -49,7 +51,7 @@ const SignUp = ({ signInWithGoogle, setIsAuth, isAuth }) => {
    };
 
    useEffect(() => {
-      if (isAuth) {
+      if (currentUser) {
          navigate("/");
       } // eslint-disable-next-line
    }, []);

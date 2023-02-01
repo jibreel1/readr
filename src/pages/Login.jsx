@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
    Box,
    Typography,
@@ -13,20 +13,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
 import Book from "../assets/spidyBook.jpg";
+import { AuthContext } from "../context/AuthContext";
 
-const Login = ({ signInWithGoogle, setIsAuth, isAuth }) => {
+const Login = ({ signInWithGoogle }) => {
    const [loginEmail, setLoginEmail] = useState("");
    const [loginPassword, setLoginPassword] = useState("");
    const [showPassword, setShowPassword] = useState("");
    const [error, setError] = useState(false);
+   const { currentUser } = useContext(AuthContext);
 
    let navigate = useNavigate();
 
    const login = async () => {
       try {
          await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-         localStorage.setItem("isAuth", true);
-         setIsAuth(true);
          // console.log(user);
          navigate("/");
       } catch (error) {
@@ -36,7 +36,7 @@ const Login = ({ signInWithGoogle, setIsAuth, isAuth }) => {
    };
 
    useEffect(() => {
-      if (isAuth) {
+      if (currentUser) {
          navigate("/");
       } // eslint-disable-next-line
    }, []);
@@ -100,7 +100,9 @@ const Login = ({ signInWithGoogle, setIsAuth, isAuth }) => {
                      onChange={event => {
                         setLoginEmail(event.target.value);
                      }}
-                     helperText={error && "Recheck your Email and Password"}
+                     helperText={
+                        error ? "Recheck your Email and Password" : undefined
+                     }
                      error={error}
                   />
                </Box>
@@ -133,7 +135,9 @@ const Login = ({ signInWithGoogle, setIsAuth, isAuth }) => {
                         }
                         label="Password"
                         error={error}
-                        helpertext={error && "Recheck your Email and Password"}
+                        helpertext={
+                           error ? "Recheck your Email and Password" : undefined
+                        }
                      />
                   </FormControl>
                </Box>
