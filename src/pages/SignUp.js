@@ -11,9 +11,10 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase-config";
+import { auth, db } from "../firebase-config";
 import Book from "../assets/books.jpg";
 import { AuthContext } from "../context/AuthContext";
+import { doc, setDoc } from "@firebase/firestore";
 
 const SignUp = ({ signInWithGoogle }) => {
    const [registerName, setRegisterName] = useState("");
@@ -25,27 +26,54 @@ const SignUp = ({ signInWithGoogle }) => {
 
    let navigate = useNavigate();
 
+   // const register = async () => {
+   //    try {
+   //       if (registerName === "") {
+   //          setError(true);
+   //          return false;
+   //       }
+   //       const user = await createUserWithEmailAndPassword(
+   //          auth,
+   //          registerEmail,
+   //          registerPassword
+   //       );
+   //       updateProfile(auth.currentUser, {
+   //          displayName: registerName,
+   //       });
+
+   //       // localStorage.setItem("isAuth", true);
+   //       // setIsAuth(true);
+   //       console.log(user);
+   //       navigate("/");
+   //    } catch (error) {
+   //       console.log(error.message);
+   //       setError(true);
+   //    }
+   // };
+
    const register = async () => {
+      // e.preventDefault();
+      // const displayName = e.target[0].value;
+      // const email = e.target[1].value;
+      // const password = e.target[2].value;
+
       try {
-         if (registerName === "") {
-            setError(true);
-            return false;
-         }
-         const user = await createUserWithEmailAndPassword(
+         const res = await createUserWithEmailAndPassword(
             auth,
             registerEmail,
             registerPassword
          );
-         updateProfile(auth.currentUser, {
+         await updateProfile(res.user, {
             displayName: registerName,
          });
-
-         // localStorage.setItem("isAuth", true);
-         // setIsAuth(true);
-         console.log(user);
-         navigate("/");
-      } catch (error) {
-         console.log(error.message);
+         await setDoc(doc(db, "users", res.user.uid), {
+            uid: res.user.uid,
+            registerName,
+            registerEmail,
+         });
+         // await setDoc(doc(db, "userchats", res.user.uid), {});
+         // navigate("/");
+      } catch (err) {
          setError(true);
       }
    };
@@ -118,7 +146,7 @@ const SignUp = ({ signInWithGoogle }) => {
                            : setError(false);
                      }}
                      error={error}
-                     helperText={error && "Input a name!!"}
+                     helperText={error ? "Input a name" : undefined}
                   />
                </Box>
                <Box my="20px" width="100%">
@@ -168,7 +196,9 @@ const SignUp = ({ signInWithGoogle }) => {
                         }
                         label="Password"
                         error={error}
-                        helpertext={error && "Recheck your Email and Password"}
+                        helpertext={
+                           error ? "Recheck your Email and Password" : undefined
+                        }
                      />
                   </FormControl>
                </Box>

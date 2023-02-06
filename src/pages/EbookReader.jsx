@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase-config";
 import Logo from "../assets/logo.png";
 import PdfViewerComponent from "../components/PdfViewerComponent";
@@ -11,19 +11,30 @@ const EbookReader = () => {
    const [ebookDetails, setEbookDetails] = useState({});
    const location = useLocation();
    const ebookRef = doc(db, "books", location.state.id);
+   // console.log(location.state.id);
 
    useEffect(() => {
       const getEbook = async () => {
          // setLoading(true);
          const docSnap = await getDoc(ebookRef);
          setEbookDetails(docSnap.data());
+
+         try {
+            const res = await getDoc(doc(db, "chats", docSnap.id));
+            if (!res.exists()) {
+               await setDoc(doc(db, "chats", docSnap.id), { messages: [] });
+            }
+         } catch (err) {
+            console.log(err);
+         }
          // setLoading(false);
+         // console.log(docSnap.id);
       };
       getEbook(); // eslint-disable-next-line
    }, []);
 
    const { ebook, title, author } = ebookDetails;
-   // console.log(ebook);
+   // console.log(ebookDetails);
 
    return (
       <>

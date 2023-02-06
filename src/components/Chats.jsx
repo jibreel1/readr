@@ -1,8 +1,14 @@
+// import { useContext } from "react";
 import { Box } from "@mui/material";
 import Input from "./Input";
 import Messages from "./Messages";
+// import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+// import { db } from "../firebase-config";
+// import { AuthContext } from "../context/AuthContext";
 
 const Chats = () => {
+   // const { currentUser } = useContext(AuthContext);
+
    return (
       <Box
          className="chats"

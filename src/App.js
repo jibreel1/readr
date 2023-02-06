@@ -60,7 +60,7 @@ const App = () => {
                element={<SignUp signInWithGoogle={signInWithGoogle} />}
             />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/book/:id" element={<EbookReader books={books} />} />
+            <Route path="/book/:id" element={<EbookReader />} />
          </Route>
          <Route element={<WithNav />}>
             <Route

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
+import { ChatContextProvider } from "./context/ChatContext";
 
 import App from "./App";
 
@@ -17,9 +18,11 @@ const theme = createTheme({
 root.render(
    <AuthContextProvider>
       <Router>
+         {/* <ChatContextProvider> */}
          <ThemeProvider theme={theme}>
             <App />
          </ThemeProvider>
+         {/* </ChatContextProvider> */}
       </Router>
    </AuthContextProvider>
 );
