@@ -421,14 +421,22 @@ h2 {
 
       .message {
          display: flex;
-         gap: 20px;
+         flex-direction: column;
+         gap: 5px;
          margin-bottom: 20px;
 
          .messageInfo {
             display: flex;
             flex-direction: column;
-            color: gray;
-            font-weight: 300;
+            align-items: flex-start;
+
+            p {
+               color: #666;
+               font-weight: 400;
+               // background-color: pink;
+               padding: 0 12px;
+               border-radius: 7px;
+            }
          }
 
          .messageContent {
@@ -438,37 +446,41 @@ h2 {
             align-items: flex-start;
             gap: 10px;
 
-            // .username {
-            //    padding: 5px 10px;
-            //    background-color: blueviolet;
-            //    font-weight: 300;
-            //    border-radius: 5px;
-            //    // height: 100%;
-            // }
             p {
-               background-color: white;
-               color: #8da4f1;
-               padding: 10px 20px;
+               background-color: $color-white;
+               color: $color-main;
+               padding: 10px 15px;
                border-radius: 0px 10px 10px 10px;
                max-width: max-content;
+
+               span {
+                  display: block;
+                  font-size: 10px;
+                  margin-top: 10px;
+               }
             }
          }
 
          &.owner {
-            flex-direction: row-reverse;
+            align-items: flex-end;
 
             .messageContent {
                align-items: flex-end;
 
                p {
-                  background-color: #8da4f1;
-                  color: white;
+                  background-color: $color-main;
                   border-radius: 10px 0px 10px 10px;
+                  color: $color-white;
+
+                  span {
+                     text-align: right;
+                  }
                }
             }
          }
       }
    }
+
    .input {
       height: 50px;
       background-color: white;
@@ -495,7 +507,7 @@ h2 {
          border: none;
          padding: 10px 15px;
          color: white;
-         background-color: #8da4f1;
+         background-color: $color-main;
          cursor: pointer;
       }
    }

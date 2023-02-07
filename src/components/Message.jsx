@@ -19,19 +19,21 @@ const Message = ({ message }) => {
       <div
          ref={ref}
          className={`message ${
-            message.senderId === currentUser.uid && "owner"
+            message.senderId === currentUser.uid ? "owner" : ""
          }`}
       >
          <div className="messageInfo">
             <p>
                {message.senderId === currentUser.uid
-                  ? currentUser.displayName
+                  ? "You"
                   : message.displayName}
             </p>
-            <span>{HourComplete}</span>
          </div>
          <div className="messageContent">
-            <p className="username">{message.text}</p>
+            <p className="username">
+               {message.text}
+               <span>{HourComplete}</span>
+            </p>
          </div>
       </div>
    );

@@ -8,7 +8,7 @@ const PdfViewerComponent = ({ document }) => {
       const container = containerRef.current;
       let PSPDFKit;
 
-      (async function () {
+      const loader = async () => {
          PSPDFKit = await import("pspdfkit");
 
          let toolbarItems = PSPDFKit.defaultToolbarItems;
@@ -17,6 +17,8 @@ const PdfViewerComponent = ({ document }) => {
          toolbarItems.splice(pagerIndex + 1, 0, { type: "layout-config" });
 
          PSPDFKit.load({
+            // The document to open.
+            document: document,
             initialViewState: new PSPDFKit.ViewState({
                readOnly: true,
                allowPrinting: false,
@@ -26,12 +28,12 @@ const PdfViewerComponent = ({ document }) => {
             // Container where PSPDFKit should be mounted.
             container,
             toolbarItems,
-            // The document to open.
-            document: document,
             // Use the public directory URL as a base URL. PSPDFKit will download its library assets from here.
-            baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
+            baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}/`,
          });
-      })();
+      };
+
+      loader();
 
       return () => PSPDFKit && PSPDFKit.unload(container);
    }, [document]);

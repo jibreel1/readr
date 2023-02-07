@@ -4,6 +4,7 @@ import { arrayUnion, doc, updateDoc, Timestamp } from "@firebase/firestore";
 import { useLocation } from "react-router-dom";
 import { db } from "../firebase-config";
 import { v4 as uuid } from "uuid";
+import SendIcon from "@mui/icons-material/Send";
 
 const Input = () => {
    const [text, setText] = useState("");
@@ -42,7 +43,9 @@ const Input = () => {
             onKeyDown={handleKeyDown}
             value={text}
          />
-         <button onClick={handleSend}>Send</button>
+         <button onClick={handleSend}>
+            <SendIcon />
+         </button>
       </div>
    );
 };
