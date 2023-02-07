@@ -4,7 +4,7 @@ import { db } from "../firebase-config";
 import { useLocation } from "react-router-dom";
 import Message from "./Message";
 
-const Messages = () => {
+const Messages = ({ scroll }) => {
    const [messages, setMessages] = useState([]);
    const location = useLocation();
 
@@ -21,7 +21,7 @@ const Messages = () => {
    return (
       <div className="messages">
          {messages.map(message => (
-            <Message message={message} key={message.id} />
+            <Message message={message} key={message.id} scroll={scroll} />
          ))}
       </div>
    );

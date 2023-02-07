@@ -1,14 +1,10 @@
-// import { useContext } from "react";
+import { useRef } from "react";
 import { Box } from "@mui/material";
 import Input from "./Input";
 import Messages from "./Messages";
-// import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-// import { db } from "../firebase-config";
-// import { AuthContext } from "../context/AuthContext";
 
 const Chats = () => {
-   // const { currentUser } = useContext(AuthContext);
-
+   const scroll = useRef();
    return (
       <Box
          className="chats"
@@ -23,8 +19,8 @@ const Chats = () => {
          borderRadius="10px"
       >
          <Box height="100%">
-            <Messages />
-            <Input />
+            <Messages scroll={scroll} />
+            <Input scroll={scroll} />
          </Box>
       </Box>
    );
