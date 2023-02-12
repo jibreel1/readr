@@ -4,6 +4,7 @@ import { Mail, Call } from "@mui/icons-material";
 const Subscribe = () => {
    return (
       <Box
+         id="contact"
          className="subscribe"
          display="flex"
          alignItems="center"

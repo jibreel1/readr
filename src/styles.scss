@@ -1,6 +1,6 @@
 //colors
 $color-white: #fff;
-$color-text: hsla(207, 63%, 32%, 0.5);
+$color-text: hslpp(207, 63%, 32%, 0.5);
 $color-main: #0162af;
 
 //font
@@ -69,40 +69,10 @@ li {
    }
 }
 
-.sidebar {
-   position: fixed;
-   top: 0;
-   right: -260px;
-   background-color: $color-white;
-   width: 250px;
-   height: 100vh;
-   display: flex;
-   align-items: flex-start;
-   flex-direction: column;
-   gap: 50px;
-   transition: 0.5s ease-in-out;
-   z-index: 4;
-   padding: 100px 0 0 20px;
-
-   &.active {
-      right: 0;
-   }
-
-   &_links {
-      display: flex;
-      list-style: none;
-      flex-direction: column;
-      color: $color-main;
-      font-weight: bold;
-      font-size: 20px;
-      gap: 30px;
-   }
-}
-
 .close {
    position: absolute;
-   top: 2em;
-   right: 2em;
+   top: 1.5em;
+   right: 1.5em;
    cursor: pointer;
 
    display: flex;
@@ -409,6 +379,15 @@ h2 {
       .logo {
          width: 100%;
       }
+   }
+}
+
+.links {
+   svg {
+      width: 1.5em;
+      height: 1.5em;
+      cursor: pointer;
+      color: $color-main;
    }
 }
 

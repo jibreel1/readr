@@ -1,44 +1,31 @@
-import { useContext } from "react";
-import { Box } from "@mui/material";
+import { Box, List, ListItem, Divider, Drawer } from "@mui/material";
 import { Link } from "react-router-dom";
-import { CloseOutlined } from "@mui/icons-material";
-import { AuthContext } from "../context/AuthContext";
 
-const SideBar = ({ toggle, links, showSideBar, isAuth }) => {
-   const { currentUser } = useContext(AuthContext);
+const SideBar = ({ toggle, links, showSideBar }) => {
    return (
-      <Box
-         sx={{ display: { sm: "none" } }}
-         className={`sidebar ${showSideBar === true ? "active" : ""}`}
-      >
-         <div className="close" onClick={toggle}>
-            <CloseOutlined />
-         </div>
-         <ul className="sidebar_links">
-            {links.map(link => (
-               <li key={link.id} onClick={toggle}>
-                  <Link to={link.path}>{link.name}</Link>
-               </li>
-            ))}
-         </ul>
-         {!currentUser && (
+      <Box sx={{ display: { xs: "none" } }}>
+         <Drawer anchor="right" open={showSideBar} onClose={toggle}>
             <Box
-               className="btn"
-               sx={{
-                  bgcolor: "#0162af",
-                  px: "30px",
-                  py: "15px",
-                  color: "#fff",
-                  fontSize: "20px",
-                  fontWeight: "500",
-                  cursor: "pointer",
-                  borderRadius: "30px",
-               }}
+               sx={{ width: 250, mt: "30px" }}
+               role="presentation"
                onClick={toggle}
+               onKeyDown={toggle}
             >
-               <Link to="/login">Sign In</Link>
+               <List>
+                  {links.map(link => (
+                     <div key={link.id}>
+                        <ListItem
+                           onClick={toggle}
+                           sx={{ my: "5px", fontSize: "18px" }}
+                        >
+                           <Link to={link.path}>{link.name}</Link>
+                        </ListItem>
+                        <Divider />
+                     </div>
+                  ))}
+               </List>
             </Box>
-         )}
+         </Drawer>
       </Box>
    );
 };

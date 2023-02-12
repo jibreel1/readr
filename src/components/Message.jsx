@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useRef, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-const Message = ({ message, scroll }) => {
+const Message = ({ message }) => {
    const { currentUser } = useContext(AuthContext);
 
    let timestamp = message.date;
@@ -10,9 +10,14 @@ const Message = ({ message, scroll }) => {
    let Minutes = newDate.getMinutes();
    const HourComplete = Hours + ":" + Minutes;
 
+   const ref = useRef();
+   useEffect(() => {
+      ref.current?.scrollIntoView({ behavior: "smooth" });
+   }, [message]);
+
    return (
       <div
-         ref={scroll}
+         ref={ref}
          className={`message ${
             message.senderId === currentUser.uid ? "owner" : ""
          }`}

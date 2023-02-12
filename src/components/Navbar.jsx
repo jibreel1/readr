@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Avatar } from "@mui/material";
-import { auth } from "../firebase-config";
+// import { auth } from "../firebase-config";
 import { SearchOutlined, MenuOutlined } from "@mui/icons-material";
 import Logo from "../assets/logo.png";
 import SideBar from "./SideBar";
@@ -9,14 +9,17 @@ import LoginDropDown from "./LoginDropDown";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = ({ links }) => {
-   // console.log(isAuth);
    const [showSideBar, setShowSideBar] = useState(false);
-   const [showLoginLinks, setShowLoginLinks] = useState(false);
+   const [showLoginLinks, setShowLoginLinks] = useState(null);
    const { currentUser } = useContext(AuthContext);
    const location = useLocation();
 
    const toggleSidebar = () => {
       showSideBar === true ? setShowSideBar(false) : setShowSideBar(true);
+   };
+
+   const handleClick = event => {
+      setShowLoginLinks(event.currentTarget);
    };
 
    return (
@@ -67,15 +70,10 @@ const Navbar = ({ links }) => {
                cursor="pointer"
                sx={{ display: { xs: "none", sm: "block" } }}
             />
-            <Box
-               position="relative"
-               onClick={() => {
-                  setShowLoginLinks(!showLoginLinks);
-               }}
-            >
+            <Box position="relative" onClick={handleClick}>
                {currentUser && (
                   <Avatar
-                     src={auth?.currentUser?.photoURL}
+                     src={currentUser?.photoURL}
                      referrerPolicy="no-referrer"
                      alt="profile-pic"
                      sx={{ width: 26, height: 26, cursor: "pointer" }}
@@ -86,7 +84,7 @@ const Navbar = ({ links }) => {
                sx={{ display: { xs: "block", sm: "none" }, cursor: "pointer" }}
                onClick={() => {
                   setShowSideBar(!showSideBar);
-                  setShowLoginLinks(false);
+                  // setShowLoginLinks(null);
                }}
             />
             {!currentUser && (

@@ -6,7 +6,7 @@ import { db } from "../firebase-config";
 import { v4 as uuid } from "uuid";
 import SendIcon from "@mui/icons-material/Send";
 
-const Input = ({ scroll }) => {
+const Input = () => {
    const [text, setText] = useState("");
    const location = useLocation();
    const { currentUser } = useContext(AuthContext);
@@ -26,7 +26,6 @@ const Input = ({ scroll }) => {
          });
       }
       setText("");
-      scroll.current.scrollIntoView({ behavior: "smooth" });
    };
 
    const handleKeyDown = e => {

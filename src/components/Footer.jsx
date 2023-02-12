@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
 import { Facebook, LinkedIn, Twitter } from "@mui/icons-material";
@@ -118,7 +118,9 @@ const Footer = ({ links }) => {
                   }}
                >
                   Readr is a social reading application for sharing your reading
-                  experience with friends family and co-workers.
+                  experience with friends family and co-workers. Allows you chat
+                  with your loved ones about the book you're reading. Enrich
+                  your reading experience and strengthen your relationships.
                </Typography>
                <Typography
                   sx={{
@@ -148,14 +150,13 @@ const Footer = ({ links }) => {
                <FooterLinks title="Platform" links={platform} />
             </Box>
          </Box>
+         <Divider />
          <Typography
             sx={{
-               borderTop: "1px solid #999",
                fontSize: "14px",
                fontWeight: "700",
                color: "#032480",
-               pt: "20px",
-               mt: "40px",
+               py: "20px",
                textAlign: "center",
             }}
          >

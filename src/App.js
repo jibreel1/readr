@@ -49,31 +49,33 @@ const App = () => {
    }, []);
 
    return (
-      <Routes>
-         <Route element={<WithoutNav />}>
-            <Route
-               path="/login"
-               element={<Login signInWithGoogle={signInWithGoogle} />}
-            />
-            <Route
-               path="/signup"
-               element={<SignUp signInWithGoogle={signInWithGoogle} />}
-            />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/book/:id" element={<EbookReader />} />
-         </Route>
-         <Route element={<WithNav />}>
-            <Route
-               path="/"
-               element={
-                  <ProtectedRoute>
-                     <Home books={books} loading={loading} />
-                  </ProtectedRoute>
-               }
-            />
-            <Route path="/ebooks" element={<Ebooks />} />
-         </Route>
-      </Routes>
+      <>
+         <Routes>
+            <Route element={<WithoutNav />}>
+               <Route
+                  path="/login"
+                  element={<Login signInWithGoogle={signInWithGoogle} />}
+               />
+               <Route
+                  path="/signup"
+                  element={<SignUp signInWithGoogle={signInWithGoogle} />}
+               />
+               <Route path="/dashboard" element={<Dashboard />} />
+               <Route path="/book/:id" element={<EbookReader />} />
+            </Route>
+            <Route element={<WithNav />}>
+               <Route
+                  path="/"
+                  element={
+                     <ProtectedRoute>
+                        <Home books={books} loading={loading} />
+                     </ProtectedRoute>
+                  }
+               />
+               <Route path="/ebooks" element={<Ebooks />} />
+            </Route>
+         </Routes>
+      </>
    );
 };
 

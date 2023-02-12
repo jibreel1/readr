@@ -26,37 +26,7 @@ const SignUp = ({ signInWithGoogle }) => {
 
    let navigate = useNavigate();
 
-   // const register = async () => {
-   //    try {
-   //       if (registerName === "") {
-   //          setError(true);
-   //          return false;
-   //       }
-   //       const user = await createUserWithEmailAndPassword(
-   //          auth,
-   //          registerEmail,
-   //          registerPassword
-   //       );
-   //       updateProfile(auth.currentUser, {
-   //          displayName: registerName,
-   //       });
-
-   //       // localStorage.setItem("isAuth", true);
-   //       // setIsAuth(true);
-   //       console.log(user);
-   //       navigate("/");
-   //    } catch (error) {
-   //       console.log(error.message);
-   //       setError(true);
-   //    }
-   // };
-
    const register = async () => {
-      // e.preventDefault();
-      // const displayName = e.target[0].value;
-      // const email = e.target[1].value;
-      // const password = e.target[2].value;
-
       try {
          const res = await createUserWithEmailAndPassword(
             auth,
