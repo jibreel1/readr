@@ -384,8 +384,8 @@ h2 {
 
 .links {
    svg {
-      width: 1.5em;
-      height: 1.5em;
+      width: 1em;
+      height: 1em;
       cursor: pointer;
       color: $color-main;
    }
@@ -490,4 +490,8 @@ h2 {
          cursor: pointer;
       }
    }
+}
+
+.logotext {
+   height: 30px;
 }

@@ -14,7 +14,7 @@ import {
    ShareOutlined,
    FlagOutlined,
 } from "@mui/icons-material";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { getDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase-config";
 import LogoText from "../assets/readrtext.png";
@@ -69,24 +69,48 @@ const EbookReader = () => {
             justifyContent="space-between"
             alignItems="center"
             sx={{
-               height: "50px",
+               height: { xs: "30px", sm: "50px" },
                mx: { xs: "5px", md: "20px" },
             }}
          >
-            <img src={LogoText} alt="logo" loading="lazy" />
-            <Box display="flex" gap="10px">
-               <Avatar
-                  src={currentUser.photoURL}
-                  referrerPolicy="no-referrer"
-                  alt="profile-pic"
-                  sx={{ width: 26, height: 26, cursor: "pointer" }}
-               />
-               <Typography
-                  fontSize="16px"
-                  sx={{ display: { xs: "none", sm: "block" } }}
+            <img
+               src={LogoText}
+               className="logotext"
+               alt="logo"
+               loading="lazy"
+            />
+            <Box
+               sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+               }}
+            >
+               <Link to="/dashboard">
+                  <Button
+                     variant="contained"
+                     sx={{ p: "4px 8px", fontSize: { xs: "12px", sm: "14px" } }}
+                  >
+                     Dashboard
+                  </Button>
+               </Link>
+               <Box
+                  sx={{
+                     display: { xs: "none", sm: "flex" },
+                     alignItems: "center",
+                     gap: "10px",
+                  }}
                >
-                  {currentUser.displayName}
-               </Typography>
+                  <Avatar
+                     src={currentUser.photoURL}
+                     referrerPolicy="no-referrer"
+                     alt="profile-pic"
+                     sx={{ width: 26, height: 26, cursor: "pointer" }}
+                  />
+                  <Typography fontSize="16px">
+                     {currentUser.displayName}
+                  </Typography>
+               </Box>
             </Box>
          </Box>
          <Box sx={{ display: { xs: "block", md: "flex" } }}>
@@ -100,7 +124,7 @@ const EbookReader = () => {
                display: { xs: "block", md: "flex" },
                flexDirection: { md: "row-reverse" },
                justifyContent: { md: "center" },
-               alignItems: { md: "center" },
+               alignItems: { md: "flex-start" },
             }}
          >
             <Box
@@ -123,7 +147,7 @@ const EbookReader = () => {
                      onClick={handleClickOpen}
                      sx={{ width: "100%" }}
                   >
-                     Chat with other Members
+                     Chat with others
                   </Button>
                   <Dialog fullScreen open={open} onClose={handleClose}>
                      <DialogTitle>{"Chats"}</DialogTitle>
