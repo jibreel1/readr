@@ -22,6 +22,7 @@ import PdfViewerComponent from "../components/PdfViewerComponent";
 import Chats from "../components/Chats";
 import ChatsMobile from "../components/ChatsMobile";
 import { AuthContext } from "../context/AuthContext";
+// import LoginDropDown from "../components/LoginDropDown";
 
 const EbookReader = () => {
    const [ebookDetails, setEbookDetails] = useState({});
@@ -80,7 +81,10 @@ const EbookReader = () => {
                   alt="profile-pic"
                   sx={{ width: 26, height: 26, cursor: "pointer" }}
                />
-               <Typography fontSize="16px">
+               <Typography
+                  fontSize="16px"
+                  sx={{ display: { xs: "none", sm: "block" } }}
+               >
                   {currentUser.displayName}
                </Typography>
             </Box>
@@ -101,30 +105,32 @@ const EbookReader = () => {
          >
             <Box
                flex="1"
-               display="flex"
-               justifyContent="space-between"
-               alignItems="center"
                sx={{
-                  justifyContent: { xs: "space-between", md: "center" },
+                  display: { xs: "block", sm: "flex" },
+                  alignItems: { sm: "center" },
+                  justifyContent: { sm: "space-between", md: "center" },
                   mb: { xs: "25px", md: "0" },
                }}
             >
-               <Box sx={{ display: { xs: "block", md: "none" } }}>
-                  <Button variant="contained" onClick={handleClickOpen}>
+               <Box
+                  sx={{
+                     display: { xs: "block", md: "none" },
+                     mb: { xs: "20px", sm: "0" },
+                  }}
+               >
+                  <Button
+                     variant="contained"
+                     onClick={handleClickOpen}
+                     sx={{ width: "100%" }}
+                  >
                      Chat with other Members
                   </Button>
-                  <Dialog
-                     open={open}
-                     onClose={handleClose}
-                     aria-labelledby="alert-dialog-title"
-                  >
-                     <DialogTitle id="alert-dialog-title">
-                        {"Chats"}
-                     </DialogTitle>
+                  <Dialog fullScreen open={open} onClose={handleClose}>
+                     <DialogTitle>{"Chats"}</DialogTitle>
                      <div className="close" onClick={handleClose}>
                         <CloseOutlined />
                      </div>
-                     <DialogContent>
+                     <DialogContent sx={{ p: "0" }}>
                         <ChatsMobile />
                      </DialogContent>
                   </Dialog>
@@ -134,6 +140,7 @@ const EbookReader = () => {
                   display="flex"
                   gap="10px"
                   alignItems="center"
+                  justifyContent="flex-end"
                >
                   <FavoriteBorder />
                   <ShareOutlined />

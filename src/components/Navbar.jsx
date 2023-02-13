@@ -28,7 +28,7 @@ const Navbar = ({ links }) => {
          className="navbar"
          sx={{
             px: { xs: "20px", sm: "32px", md: "54px", lg: "72px" },
-            py: "1em",
+            // py: "1em",
          }}
       >
          <Box

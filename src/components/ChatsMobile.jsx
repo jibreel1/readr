@@ -12,7 +12,7 @@ const Chats = () => {
          bgcolor="#F6F8FA"
          sx={{
             display: { xs: "block", md: "none" },
-            height: "450px",
+            height: "100%",
          }}
          borderRadius="10px"
       >

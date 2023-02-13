@@ -11,7 +11,7 @@ const Features = () => {
          }}
       >
          <Typography
-            component="h2"
+            component="h3"
             sx={{
                fontSize: { xs: "32px", sm: "40px" },
                fontWeight: "700",
@@ -19,6 +19,11 @@ const Features = () => {
                margin: "0 auto",
                textAlign: "center",
                lineHeight: "1.2",
+               zIndex: "2",
+               position: "relative",
+               color: "#0162af",
+               backgroundColor: "rgb(255 255 255 / 50%)",
+               borderRadius: "15px",
             }}
          >
             A dream you hold in your hands.
