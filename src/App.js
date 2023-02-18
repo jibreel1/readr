@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc } from "firebase/firestore";
 import { db, auth, provider } from "./firebase-config";
 import { signInWithPopup } from "firebase/auth";
 import { AuthContext } from "./context/AuthContext";
@@ -29,10 +29,20 @@ const App = () => {
       return children;
    };
 
-   const signInWithGoogle = () => {
-      signInWithPopup(auth, provider).then(result => {
+   const signInWithGoogle = async () => {
+      try {
+         const res = await signInWithPopup(auth, provider);
+
+         await setDoc(doc(db, "users", res.user.uid), {
+            uid: res.user.uid,
+            registerName: res.user.displayName,
+            registerEmail: res.user.email,
+         });
+         await setDoc(doc(db, "userchats", res.user.uid), {});
          navigate("/");
-      });
+      } catch (err) {
+         console.log(err);
+      }
    };
 
    const booksCollectionRef = collection(db, "books");

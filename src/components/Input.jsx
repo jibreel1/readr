@@ -1,6 +1,12 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { arrayUnion, doc, updateDoc, Timestamp } from "@firebase/firestore";
+import {
+   arrayUnion,
+   doc,
+   updateDoc,
+   Timestamp,
+   serverTimestamp,
+} from "@firebase/firestore";
 import { useLocation } from "react-router-dom";
 import { db } from "../firebase-config";
 import { v4 as uuid } from "uuid";
@@ -25,6 +31,12 @@ const Input = () => {
             }),
          });
       }
+      await updateDoc(doc(db, "userchats", currentUser.uid), {
+         [location.state.id + ".messages"]: {
+            text,
+         },
+         [location.state.id + ".date"]: serverTimestamp(),
+      });
       setText("");
    };
 

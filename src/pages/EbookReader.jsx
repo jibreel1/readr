@@ -15,7 +15,13 @@ import {
    FlagOutlined,
 } from "@mui/icons-material";
 import { useLocation, Link } from "react-router-dom";
-import { getDoc, doc, setDoc } from "firebase/firestore";
+import {
+   getDoc,
+   doc,
+   setDoc,
+   updateDoc,
+   serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../firebase-config";
 import LogoText from "../assets/readrtext.png";
 import PdfViewerComponent from "../components/PdfViewerComponent";
@@ -28,7 +34,6 @@ const EbookReader = () => {
    const [ebookDetails, setEbookDetails] = useState({});
    const [open, setOpen] = useState(false);
    const location = useLocation();
-   const ebookRef = doc(db, "books", location.state.id);
    const { currentUser } = useContext(AuthContext);
 
    const handleClickOpen = () => {
@@ -39,6 +44,7 @@ const EbookReader = () => {
       setOpen(false);
    };
 
+   const ebookRef = doc(db, "books", location.state.id);
    useEffect(() => {
       const getEbook = async () => {
          // setLoading(true);
@@ -49,6 +55,21 @@ const EbookReader = () => {
             const res = await getDoc(doc(db, "chats", docSnap.id));
             if (!res.exists()) {
                await setDoc(doc(db, "chats", docSnap.id), { messages: [] });
+
+               await updateDoc(doc(db, "userchats", currentUser.uid), {
+                  [docSnap.id + ".ebookDetails"]: {
+                     title: docSnap.data().title,
+                     coverPage: docSnap.data().coverPage,
+                     ebookURL: docSnap.data().ebook,
+                     author: docSnap.data().author,
+                  },
+                  [docSnap.id + ".userInfo"]: {
+                     uid: currentUser.uid,
+                     displayName: currentUser.displayName,
+                     email: currentUser.email,
+                  },
+                  [docSnap.id + ".date"]: serverTimestamp(),
+               });
             }
          } catch (err) {
             console.log(err);
@@ -73,12 +94,14 @@ const EbookReader = () => {
                mx: { xs: "5px", md: "20px" },
             }}
          >
-            <img
-               src={LogoText}
-               className="logotext"
-               alt="logo"
-               loading="lazy"
-            />
+            <Link to="/">
+               <img
+                  src={LogoText}
+                  className="logotext"
+                  alt="logo"
+                  loading="lazy"
+               />
+            </Link>
             <Box
                sx={{
                   display: "flex",

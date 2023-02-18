@@ -41,8 +41,8 @@ const SignUp = ({ signInWithGoogle }) => {
             registerName,
             registerEmail,
          });
-         // await setDoc(doc(db, "userchats", res.user.uid), {});
-         // navigate("/");
+         await setDoc(doc(db, "userchats", res.user.uid), {});
+         navigate("/");
       } catch (err) {
          setError(true);
       }
