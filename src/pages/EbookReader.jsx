@@ -7,6 +7,8 @@ import {
    Dialog,
    DialogContent,
    DialogTitle,
+   DialogContentText,
+   DialogActions,
 } from "@mui/material";
 import {
    CloseOutlined,
@@ -33,8 +35,12 @@ import { AuthContext } from "../context/AuthContext";
 const EbookReader = () => {
    const [ebookDetails, setEbookDetails] = useState({});
    const [open, setOpen] = useState(false);
+   const [openDash, setOpenDash] = useState(false);
    const location = useLocation();
    const { currentUser } = useContext(AuthContext);
+   const yes = true;
+   const no = true;
+   // let no;
 
    const handleClickOpen = () => {
       setOpen(true);
@@ -42,6 +48,14 @@ const EbookReader = () => {
 
    const handleClose = () => {
       setOpen(false);
+   };
+
+   const handleClickDash = () => {
+      setOpenDash(true);
+   };
+
+   const handleCloseDash = () => {
+      setOpenDash(false);
    };
 
    const ebookRef = doc(db, "books", location.state.id);
@@ -111,14 +125,36 @@ const EbookReader = () => {
                   gap: "10px",
                }}
             >
-               <Link to="/dashboard">
-                  <Button
-                     variant="contained"
-                     sx={{ p: "4px 8px", fontSize: { xs: "12px", sm: "14px" } }}
-                  >
-                     Dashboard
-                  </Button>
-               </Link>
+               <Button
+                  variant="contained"
+                  onClick={handleClickDash}
+                  sx={{ p: "4px 8px", fontSize: { xs: "12px", sm: "14px" } }}
+               >
+                  Dashboard
+               </Button>
+               <Dialog
+                  open={openDash}
+                  onClose={handleCloseDash}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+               >
+                  <DialogTitle id="alert-dialog-title">
+                     {"Have you completed this book?"}
+                  </DialogTitle>
+                  <DialogContent>
+                     <DialogContentText id="alert-dialog-description">
+                        Did you complete {title} already? READR asks...
+                     </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                     <Link to="/dashboard" state={{ no: no }}>
+                        <Button onClick={handleCloseDash}>No</Button>
+                     </Link>
+                     <Link to="/dashboard" state={{ yes: yes }}>
+                        <Button onClick={handleCloseDash}>Yes</Button>
+                     </Link>
+                  </DialogActions>
+               </Dialog>
                <Box
                   sx={{
                      display: { xs: "none", sm: "flex" },

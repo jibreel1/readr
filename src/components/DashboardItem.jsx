@@ -1,11 +1,12 @@
 // import { useState } from "react";
 import { Box, Typography, Rating, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // import Pic from "../assets/spidyBook.jpg";
 
 const DashboardItem = ({ info }) => {
+   const location = useLocation();
    const rating = info[1].ebookDetails.rating;
-   //    console.log(info[0]);
+   console.log(location.state.yes);
    return (
       <Box
          display="flex"
@@ -64,17 +65,20 @@ const DashboardItem = ({ info }) => {
             <Typography
                fontSize="inherit"
                sx={{
-                  bgcolor: { xs: "none", sm: "#ff00004d" },
+                  bgcolor:
+                     location.state.yes === true
+                        ? { xs: "none", sm: "#00ff004d" }
+                        : { xs: "none", sm: "#ff00004d" },
                   display: "inline-block",
                   p: { xs: "0", sm: "5px 10px" },
                   borderRadius: "20px",
                }}
             >
-               Not Completed
+               {location.state.yes === true ? "Completed" : "Not completed"}
             </Typography>
          </Box>
          <Box flex="1">
-            <Link to="/">
+            <Link to={`/book/${info[0]}`} state={{ id: info[0] }}>
                <Button
                   variant="contained"
                   sx={{
@@ -83,7 +87,7 @@ const DashboardItem = ({ info }) => {
                      p: "5px 10px",
                   }}
                >
-                  Continue
+                  {location.state.yes === true ? "Read" : "Continue"}
                </Button>
             </Link>
          </Box>
