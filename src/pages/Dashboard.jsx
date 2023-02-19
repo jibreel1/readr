@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
    Box,
    Typography,
@@ -9,13 +9,32 @@ import {
 } from "@mui/material";
 import { NotificationsNone } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { auth } from "../firebase-config";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase-config";
 import { AuthContext } from "../context/AuthContext";
 import LogoText from "../assets/readrtext.png";
 import DashboardItem from "../components/DashboardItem";
 
 const Dashboard = () => {
+   const [dashInfo, setDashInfo] = useState([]);
    const { currentUser } = useContext(AuthContext);
+
+   useEffect(() => {
+      const getDashInfo = () => {
+         const unsub = onSnapshot(
+            doc(db, "userchats", currentUser.uid),
+            doc => {
+               setDashInfo(doc.data());
+            }
+         );
+
+         return () => {
+            unsub();
+         };
+      };
+
+      currentUser.uid && getDashInfo();
+   }, [currentUser.uid]);
 
    return (
       <>
@@ -58,7 +77,7 @@ const Dashboard = () => {
                   <NotificationsNone />
                </Badge>
                <Avatar
-                  src={auth?.currentUser?.photoURL}
+                  src={currentUser?.photoURL}
                   referrerPolicy="no-referrer"
                   alt="profile-pic"
                   sx={{ width: 26, height: 26, cursor: "pointer" }}
@@ -78,13 +97,11 @@ const Dashboard = () => {
          <Box
             sx={{
                px: { xs: "15px", sm: "32px" },
-               // fontSize: "13px",
                fontSize: { xs: "11px", sm: "13px" },
             }}
          >
             <Box
                display="flex"
-               // justifyContent="space-between"
                height="50px"
                alignItems="center"
                backgroundColor="rgb(248, 249, 253)"
@@ -115,9 +132,14 @@ const Dashboard = () => {
                <Typography flex="1">Action</Typography>
             </Box>
             <Divider sx={{ borderColor: "#fff", height: "5px" }} />
-            <DashboardItem />
-            <Divider />
-            <DashboardItem />
+            {Object.entries(dashInfo)
+               ?.sort((a, b) => b[1].date - a[1].date)
+               .map(info => (
+                  <div key={info[0]}>
+                     <DashboardItem info={info} />
+                     <Divider sx={{ borderColor: "#fff", height: "5px" }} />
+                  </div>
+               ))}
          </Box>
       </>
    );

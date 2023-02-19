@@ -1,8 +1,11 @@
+// import { useState } from "react";
 import { Box, Typography, Rating, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import Pic from "../assets/spidyBook.jpg";
+// import Pic from "../assets/spidyBook.jpg";
 
-const DashboardItem = () => {
+const DashboardItem = ({ info }) => {
+   const rating = info[1].ebookDetails.rating;
+   //    console.log(info[0]);
    return (
       <Box
          display="flex"
@@ -24,7 +27,11 @@ const DashboardItem = () => {
                justifyContent: { xs: "center", sm: "flex-start" },
             }}
          >
-            <img src={Pic} alt="cover-page" className="cover-page" />
+            <img
+               src={info[1].ebookDetails.coverPage}
+               alt="cover-page"
+               className="cover-page"
+            />
             <Typography
                fontSize="inherit"
                fontWeight="700"
@@ -32,11 +39,13 @@ const DashboardItem = () => {
                   textAlign: { xs: "center", sm: "left" },
                }}
             >
-               The Peaky Blinders
+               {info[1].ebookDetails.title}
             </Typography>
          </Box>
          <Box flex="1">
-            <Typography fontSize="inherit">Thomas Shelby</Typography>
+            <Typography fontSize="inherit">
+               {info[1].ebookDetails.author}
+            </Typography>
          </Box>
          <Box
             flex="1"
@@ -44,7 +53,12 @@ const DashboardItem = () => {
                display: { xs: "none", sm: "block" },
             }}
          >
-            <Rating defaultValue={5} precision={0.5} readOnly size="small" />
+            <Rating
+               defaultValue={rating}
+               precision={0.5}
+               readOnly
+               size="small"
+            />
          </Box>
          <Box flex="1">
             <Typography
