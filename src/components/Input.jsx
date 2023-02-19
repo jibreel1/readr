@@ -32,9 +32,10 @@ const Input = () => {
          });
       }
       await updateDoc(doc(db, "userchats", currentUser.uid), {
-         [location.state.id + ".messages"]: {
+         [location.state.id + ".messages"]: arrayUnion({
+            id: uuid(),
             text,
-         },
+         }),
          [location.state.id + ".date"]: serverTimestamp(),
       });
       setText("");

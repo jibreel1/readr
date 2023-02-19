@@ -1,40 +1,42 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Star } from "@mui/icons-material";
+import { Rating } from "@mui/material";
 
 const BookCard = ({ book }) => {
    return (
-      <Link to={`/book/${book.id}`} state={{ id: book.id }} className="book">
-         <Box width="170px" height="230px" mb="20px">
+      <div className="book">
+         <Box width="200px" height="260px">
             <img src={book.coverPage} className="book-img" alt={book.title} />
          </Box>
-         <Typography
-            component="h3"
-            mb="7px"
-            textAlign="center"
-            sx={{ fontSize: { xs: "16px", md: "20px" }, fontWeight: "700" }}
-         >
-            {book.title}
-         </Typography>
-         <Typography
-            mb="20px"
-            sx={{ fontSize: { xs: "14px", md: "16px" }, color: "#555" }}
-         >
-            {book.author}
-         </Typography>
-         {/* <Typography
-            bgcolor="#0162af"
-            color="#fff"
-            p="4px 25px"
-            borderRadius="20px"
-            mb="20px"
-         >
-            Read book
-         </Typography> */}
-         <Typography display="flex" gap="10px" alignItems="center">
-            <Star sx={{ color: "#0162af" }} /> {book.rating.toFixed(1)}/5.0
-         </Typography>
-      </Link>
+         <Box m="15px 10px">
+            <Typography component="h3" height="48px" sx={{ fontWeight: "700" }}>
+               {book.title}
+            </Typography>
+            <Typography my="10px" sx={{ fontSize: "14px", color: "#555" }}>
+               {book.author}
+            </Typography>
+
+            <Box
+               display="flex"
+               gap="10px"
+               alignItems="center"
+               justifyContent="space-between"
+            >
+               <Rating
+                  defaultValue={book.rating}
+                  precision={0.5}
+                  readOnly
+                  size="small"
+               />
+
+               <Link to={`/book/${book.id}`} state={{ id: book.id }}>
+                  <Button variant="contained" sx={{ fontWeight: "700" }}>
+                     Read
+                  </Button>
+               </Link>
+            </Box>
+         </Box>
+      </div>
    );
 };
 

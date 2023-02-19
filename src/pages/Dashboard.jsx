@@ -1,20 +1,21 @@
 import { useContext } from "react";
-import { Box, Typography, TextField, Badge, Avatar } from "@mui/material";
+import {
+   Box,
+   Typography,
+   TextField,
+   Badge,
+   Avatar,
+   Divider,
+} from "@mui/material";
 import { NotificationsNone } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase-config";
 import { AuthContext } from "../context/AuthContext";
 import LogoText from "../assets/readrtext.png";
+import DashboardItem from "../components/DashboardItem";
 
-const Dashboard = ({ isAuth, user }) => {
+const Dashboard = () => {
    const { currentUser } = useContext(AuthContext);
-   // let navigate = useNavigate();
-
-   // useEffect(() => {
-   // 	if (!isAuth) {
-   // 	   navigate("/signup");
-   // 	} // eslint-disable-next-line
-   //  }, []);
 
    return (
       <>
@@ -25,13 +26,10 @@ const Dashboard = ({ isAuth, user }) => {
             justifyContent="space-between"
             height="50px"
             sx={{
-               px: { xs: "20px", sm: "32px" },
+               px: { xs: "15px", sm: "35px" },
             }}
          >
-            <Box
-               className="dashboard_img"
-               sx={{ width: { xs: "40px", md: "70px" } }}
-            >
+            <Box className="dashboard_img">
                <Link to="/">
                   <img
                      src={LogoText}
@@ -47,7 +45,14 @@ const Dashboard = ({ isAuth, user }) => {
                   label="Search"
                   type="search"
                   width="300px"
-                  sx={{ height: "40px", display: { xs: "none", sm: "block" } }}
+                  sx={{
+                     // height: "40px",
+                     display: { xs: "none", sm: "block" },
+                     "& .MuiInputBase-input": {
+                        padding: "10px 7px",
+                        height: "20px",
+                     },
+                  }}
                />
                <Badge badgeContent={4} color="primary" variant="dot">
                   <NotificationsNone />
@@ -58,17 +63,61 @@ const Dashboard = ({ isAuth, user }) => {
                   alt="profile-pic"
                   sx={{ width: 26, height: 26, cursor: "pointer" }}
                />
-               <Typography component="h3" color="#0162af" fontWeight="700">
+               <Typography
+                  component="h3"
+                  color="#0162af"
+                  fontWeight="700"
+                  sx={{
+                     display: { xs: "none", sm: "block" },
+                  }}
+               >
                   {currentUser?.displayName}
                </Typography>
             </Box>
          </Box>
-         <Box display="flex" justifyContent="space-between">
-            <p>Title</p>
-            <p>Author</p>
-            <p>Rating</p>
-            <p>Status</p>
-            <p>Action</p>
+         <Box
+            sx={{
+               px: { xs: "15px", sm: "32px" },
+               // fontSize: "13px",
+               fontSize: { xs: "11px", sm: "13px" },
+            }}
+         >
+            <Box
+               display="flex"
+               // justifyContent="space-between"
+               height="50px"
+               alignItems="center"
+               backgroundColor="rgb(248, 249, 253)"
+               // pl="15px"
+               sx={{
+                  textAlign: { xs: "center", sm: "left" },
+                  gap: { xs: "5px", sm: "10px" },
+                  px: { xs: "10px", sm: "15px" },
+               }}
+            >
+               <Typography
+                  sx={{
+                     flex: { xs: "1", sm: "2" },
+                  }}
+               >
+                  Title
+               </Typography>
+               <Typography flex="1">Author</Typography>
+               <Typography
+                  flex="1"
+                  sx={{
+                     display: { xs: "none", sm: "block" },
+                  }}
+               >
+                  Rating
+               </Typography>
+               <Typography flex="1">Status</Typography>
+               <Typography flex="1">Action</Typography>
+            </Box>
+            <Divider sx={{ borderColor: "#fff", height: "5px" }} />
+            <DashboardItem />
+            <Divider />
+            <DashboardItem />
          </Box>
       </>
    );

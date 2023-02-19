@@ -3,7 +3,7 @@ import BookCard from "./BookCard";
 
 const Books = ({ books }) => {
    return (
-      <Box my="80px">
+      <Box py="80px" backgroundColor="rgb(248, 249, 253)">
          <Typography
             component="h2"
             mb="30px"
