@@ -8,7 +8,7 @@ import {
    Divider,
 } from "@mui/material";
 import { NotificationsNone } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase-config";
 import { AuthContext } from "../context/AuthContext";
@@ -17,7 +17,10 @@ import DashboardItem from "../components/DashboardItem";
 
 const Dashboard = () => {
    const [dashInfo, setDashInfo] = useState([]);
+   const location = useLocation();
    const { currentUser } = useContext(AuthContext);
+   const yes = location.state.yes;
+   console.log(yes);
 
    useEffect(() => {
       const getDashInfo = () => {
@@ -136,7 +139,7 @@ const Dashboard = () => {
                ?.sort((a, b) => b[1].date - a[1].date)
                .map(info => (
                   <div key={info[0]}>
-                     <DashboardItem info={info} />
+                     <DashboardItem info={info} yes={yes} />
                      <Divider sx={{ borderColor: "#fff", height: "5px" }} />
                   </div>
                ))}

@@ -91,7 +91,6 @@ const EbookReader = () => {
             console.log(err);
          }
          // setLoading(false);
-         // console.log(docSnap.id);
       };
       getEbook(); // eslint-disable-next-line
    }, []);
