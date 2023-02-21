@@ -171,9 +171,6 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
                      sx={{ width: 26, height: 26, cursor: "pointer" }}
                      onClick={handleClickLogin}
                   />
-                  <Typography fontSize="16px">
-                     {currentUser.displayName}
-                  </Typography>
                </Box>
             </Box>
          </Box>

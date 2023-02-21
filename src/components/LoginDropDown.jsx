@@ -14,6 +14,8 @@ import { auth } from "../firebase-config";
 
 const LoginDropDown = ({ showLoginLinks, setShowLoginLinks }) => {
    let navigate = useNavigate();
+   const yes = true;
+   // const no = true;
 
    const open = Boolean(showLoginLinks);
 
@@ -96,7 +98,12 @@ const LoginDropDown = ({ showLoginLinks, setShowLoginLinks }) => {
          </MenuItem>
          <Divider />
          {AccountLinks.map(link => (
-            <Link onClick={handleClose} to={link.path} key={link.id}>
+            <Link
+               onClick={handleClose}
+               to={link.path}
+               key={link.id}
+               state={{ yes: yes }}
+            >
                <MenuItem>{link.name}</MenuItem>
             </Link>
          ))}

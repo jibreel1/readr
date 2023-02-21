@@ -15,9 +15,11 @@ import { AuthContext } from "../context/AuthContext";
 import LogoText from "../assets/readrtext.png";
 import DashboardItem from "../components/DashboardItem";
 import LoginDropDown from "../components/LoginDropDown";
+import Notifications from "../components/Notifications";
 
 const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
    const [dashInfo, setDashInfo] = useState([]);
+   const [showNotify, setShowNotify] = useState(null);
    const location = useLocation();
    const { currentUser } = useContext(AuthContext);
    const yes = location.state.yes;
@@ -25,6 +27,10 @@ const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
 
    const handleClick = event => {
       setShowLoginLinks(event.currentTarget);
+   };
+
+   const handleClickNotify = event => {
+      setShowNotify(event.currentTarget);
    };
 
    useEffect(() => {
@@ -81,8 +87,16 @@ const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
                      },
                   }}
                />
-               <Badge badgeContent={4} color="primary" variant="dot">
-                  <NotificationsNone />
+               <Badge
+                  badgeContent={"1"}
+                  overlap="circular"
+                  // variant="dot"
+                  color="error"
+               >
+                  <NotificationsNone
+                     cursor="pointer"
+                     onClick={handleClickNotify}
+                  />
                </Badge>
                <Avatar
                   src={currentUser?.photoURL}
@@ -91,16 +105,6 @@ const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
                   sx={{ width: 26, height: 26, cursor: "pointer" }}
                   onClick={handleClick}
                />
-               <Typography
-                  component="h3"
-                  color="#0162af"
-                  fontWeight="700"
-                  sx={{
-                     display: { xs: "none", sm: "block" },
-                  }}
-               >
-                  {currentUser?.displayName}
-               </Typography>
             </Box>
          </Box>
          <Box
@@ -154,6 +158,7 @@ const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
             showLoginLinks={showLoginLinks}
             setShowLoginLinks={setShowLoginLinks}
          />
+         <Notifications showNotify={showNotify} setShowNotify={setShowNotify} />
       </>
    );
 };
