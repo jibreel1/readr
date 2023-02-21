@@ -1,16 +1,14 @@
 import { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, Avatar } from "@mui/material";
-// import { auth } from "../firebase-config";
 import { SearchOutlined, MenuOutlined } from "@mui/icons-material";
 import Logo from "../assets/logo.png";
 import SideBar from "./SideBar";
 import LoginDropDown from "./LoginDropDown";
 import { AuthContext } from "../context/AuthContext";
 
-const Navbar = ({ links }) => {
+const Navbar = ({ links, showLoginLinks, setShowLoginLinks }) => {
    const [showSideBar, setShowSideBar] = useState(false);
-   const [showLoginLinks, setShowLoginLinks] = useState(null);
    const { currentUser } = useContext(AuthContext);
    const location = useLocation();
 
@@ -28,7 +26,6 @@ const Navbar = ({ links }) => {
          className="navbar"
          sx={{
             px: { xs: "20px", sm: "32px", md: "54px", lg: "72px" },
-            // py: "1em",
          }}
       >
          <Box
@@ -84,7 +81,6 @@ const Navbar = ({ links }) => {
                sx={{ display: { xs: "block", sm: "none" }, cursor: "pointer" }}
                onClick={() => {
                   setShowSideBar(!showSideBar);
-                  // setShowLoginLinks(null);
                }}
             />
             {!currentUser && (

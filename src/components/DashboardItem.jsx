@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const DashboardItem = ({ info, yes }) => {
    const rating = info[1].ebookDetails.rating;
-   console.log(yes);
+   // console.log(yes);
    return (
       <Box
          display="flex"

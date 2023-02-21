@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, getDoc, setDoc, doc } from "firebase/firestore";
 import { db, auth, provider } from "./firebase-config";
 import { signInWithPopup } from "firebase/auth";
 import { AuthContext } from "./context/AuthContext";
@@ -18,6 +18,7 @@ import "./styles.scss";
 
 const App = () => {
    const [books, setBooks] = useState([]);
+   const [showLoginLinks, setShowLoginLinks] = useState(null);
    const [loading, setLoading] = useState(false);
    const { currentUser } = useContext(AuthContext);
    let navigate = useNavigate();
@@ -38,7 +39,10 @@ const App = () => {
             registerName: res.user.displayName,
             registerEmail: res.user.email,
          });
-         await setDoc(doc(db, "userchats", res.user.uid), {});
+         const resChat = await getDoc(doc(db, "userchats", res.user.uid));
+         if (!resChat.exists()) {
+            await setDoc(doc(db, "userchats", res.user.uid), {});
+         }
          navigate("/");
       } catch (err) {
          console.log(err);
@@ -70,10 +74,33 @@ const App = () => {
                   path="/signup"
                   element={<SignUp signInWithGoogle={signInWithGoogle} />}
                />
-               <Route path="/dashboard" element={<Dashboard />} />
-               <Route path="/book/:id" element={<EbookReader />} />
+               <Route
+                  path="/dashboard"
+                  element={
+                     <Dashboard
+                        showLoginLinks={showLoginLinks}
+                        setShowLoginLinks={setShowLoginLinks}
+                     />
+                  }
+               />
+               <Route
+                  path="/book/:id"
+                  element={
+                     <EbookReader
+                        showLoginLinks={showLoginLinks}
+                        setShowLoginLinks={setShowLoginLinks}
+                     />
+                  }
+               />
             </Route>
-            <Route element={<WithNav />}>
+            <Route
+               element={
+                  <WithNav
+                     showLoginLinks={showLoginLinks}
+                     setShowLoginLinks={setShowLoginLinks}
+                  />
+               }
+            >
                <Route
                   path="/"
                   element={

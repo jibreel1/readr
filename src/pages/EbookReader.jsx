@@ -30,9 +30,9 @@ import PdfViewerComponent from "../components/PdfViewerComponent";
 import Chats from "../components/Chats";
 import ChatsMobile from "../components/ChatsMobile";
 import { AuthContext } from "../context/AuthContext";
-// import LoginDropDown from "../components/LoginDropDown";
+import LoginDropDown from "../components/LoginDropDown";
 
-const EbookReader = () => {
+const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
    const [ebookDetails, setEbookDetails] = useState({});
    const [open, setOpen] = useState(false);
    const [openDash, setOpenDash] = useState(false);
@@ -42,15 +42,19 @@ const EbookReader = () => {
    const no = true;
    // let no;
 
-   const handleClickOpen = () => {
+   const handleClickLogin = event => {
+      setShowLoginLinks(event.currentTarget);
+   };
+
+   const handleOpenChat = () => {
       setOpen(true);
    };
 
-   const handleClose = () => {
+   const handleCloseChat = () => {
       setOpen(false);
    };
 
-   const handleClickDash = () => {
+   const handleOpenDash = () => {
       setOpenDash(true);
    };
 
@@ -69,7 +73,6 @@ const EbookReader = () => {
             const res = await getDoc(doc(db, "chats", docSnap.id));
             if (!res.exists()) {
                await setDoc(doc(db, "chats", docSnap.id), { messages: [] });
-            } else {
             }
             await updateDoc(doc(db, "userchats", currentUser.uid), {
                [docSnap.id + ".ebookDetails"]: {
@@ -126,7 +129,7 @@ const EbookReader = () => {
             >
                <Button
                   variant="contained"
-                  onClick={handleClickDash}
+                  onClick={handleOpenDash}
                   sx={{ p: "4px 8px", fontSize: { xs: "12px", sm: "14px" } }}
                >
                   Dashboard
@@ -142,7 +145,7 @@ const EbookReader = () => {
                   </DialogTitle>
                   <DialogContent>
                      <DialogContentText id="alert-dialog-description">
-                        Did you complete {title} already? READR asks...
+                        Did you complete "{title}" already? READR asks...
                      </DialogContentText>
                   </DialogContent>
                   <DialogActions>
@@ -166,6 +169,7 @@ const EbookReader = () => {
                      referrerPolicy="no-referrer"
                      alt="profile-pic"
                      sx={{ width: 26, height: 26, cursor: "pointer" }}
+                     onClick={handleClickLogin}
                   />
                   <Typography fontSize="16px">
                      {currentUser.displayName}
@@ -204,14 +208,14 @@ const EbookReader = () => {
                >
                   <Button
                      variant="contained"
-                     onClick={handleClickOpen}
+                     onClick={handleOpenChat}
                      sx={{ width: "100%" }}
                   >
                      Chat with others
                   </Button>
-                  <Dialog fullScreen open={open} onClose={handleClose}>
+                  <Dialog fullScreen open={open} onClose={handleCloseChat}>
                      <DialogTitle>{"Chats"}</DialogTitle>
-                     <div className="close" onClick={handleClose}>
+                     <div className="close" onClick={handleCloseChat}>
                         <CloseOutlined />
                      </div>
                      <DialogContent sx={{ p: "0" }}>
@@ -247,6 +251,10 @@ const EbookReader = () => {
                </Typography>
                <Typography component="em">{description}</Typography>
             </Box>
+            <LoginDropDown
+               showLoginLinks={showLoginLinks}
+               setShowLoginLinks={setShowLoginLinks}
+            />
          </Box>
       </>
    );

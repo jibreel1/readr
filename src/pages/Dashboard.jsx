@@ -14,13 +14,18 @@ import { db } from "../firebase-config";
 import { AuthContext } from "../context/AuthContext";
 import LogoText from "../assets/readrtext.png";
 import DashboardItem from "../components/DashboardItem";
+import LoginDropDown from "../components/LoginDropDown";
 
-const Dashboard = () => {
+const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
    const [dashInfo, setDashInfo] = useState([]);
    const location = useLocation();
    const { currentUser } = useContext(AuthContext);
    const yes = location.state.yes;
-   console.log(yes);
+   // console.log(yes);
+
+   const handleClick = event => {
+      setShowLoginLinks(event.currentTarget);
+   };
 
    useEffect(() => {
       const getDashInfo = () => {
@@ -84,6 +89,7 @@ const Dashboard = () => {
                   referrerPolicy="no-referrer"
                   alt="profile-pic"
                   sx={{ width: 26, height: 26, cursor: "pointer" }}
+                  onClick={handleClick}
                />
                <Typography
                   component="h3"
@@ -144,6 +150,10 @@ const Dashboard = () => {
                   </div>
                ))}
          </Box>
+         <LoginDropDown
+            showLoginLinks={showLoginLinks}
+            setShowLoginLinks={setShowLoginLinks}
+         />
       </>
    );
 };

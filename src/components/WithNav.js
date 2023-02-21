@@ -2,7 +2,7 @@ import NavBar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet } from "react-router";
 
-const WithNav = () => {
+const WithNav = ({ showLoginLinks, setShowLoginLinks }) => {
    const links = [
       {
          id: "1",
@@ -27,7 +27,11 @@ const WithNav = () => {
    ];
    return (
       <>
-         <NavBar links={links} />
+         <NavBar
+            links={links}
+            showLoginLinks={showLoginLinks}
+            setShowLoginLinks={setShowLoginLinks}
+         />
          <Outlet />
          <Footer links={links} />
       </>

@@ -14,7 +14,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase-config";
 import Book from "../assets/books.jpg";
 import { AuthContext } from "../context/AuthContext";
-import { doc, setDoc } from "@firebase/firestore";
+import { doc, getDoc, setDoc } from "@firebase/firestore";
 
 const SignUp = ({ signInWithGoogle }) => {
    const [registerName, setRegisterName] = useState("");
@@ -41,7 +41,10 @@ const SignUp = ({ signInWithGoogle }) => {
             registerName,
             registerEmail,
          });
-         await setDoc(doc(db, "userchats", res.user.uid), {});
+         const resChat = await getDoc(doc(db, "userchats", res.user.uid));
+         if (!resChat.exists()) {
+            await setDoc(doc(db, "userchats", res.user.uid), {});
+         }
          navigate("/");
       } catch (err) {
          setError(true);
