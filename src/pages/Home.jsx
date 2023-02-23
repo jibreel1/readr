@@ -4,13 +4,13 @@ import BookQuotes from "../components/BookQuotes";
 import Books from "../components/Books";
 import Subscribe from "../components/Subscribe";
 
-const Home = ({ books }) => {
+const Home = ({ books, loading }) => {
    return (
       <div>
          <Hero />
          <Features />
          <BookQuotes />
-         <Books books={books} />
+         <Books books={books} isLoading={loading} />
          <Subscribe />
       </div>
    );

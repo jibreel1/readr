@@ -1,7 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import BookCard from "./BookCard";
+import BookSkeleton from "./BookSkeleton";
 
-const Books = ({ books }) => {
+const Books = ({ books, isLoading }) => {
    return (
       <Box py="80px" backgroundColor="rgb(248, 249, 253)">
          <Typography
@@ -16,11 +17,20 @@ const Books = ({ books }) => {
          >
             Popular Books
          </Typography>
-         <Box display="flex" flexWrap="wrap" gap="30px" justifyContent="center">
-            {books.map(book => (
-               <BookCard book={book} key={book.id} />
-            ))}
-         </Box>
+         {isLoading ? (
+            <BookSkeleton />
+         ) : (
+            <Box
+               display="flex"
+               flexWrap="wrap"
+               gap="30px"
+               justifyContent="center"
+            >
+               {books.map(book => (
+                  <BookCard book={book} key={book.id} />
+               ))}
+            </Box>
+         )}
       </Box>
    );
 };
