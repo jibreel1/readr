@@ -16,7 +16,7 @@ import {
    ShareOutlined,
    FlagOutlined,
 } from "@mui/icons-material";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
    getDoc,
    doc,
@@ -37,10 +37,8 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
    const [open, setOpen] = useState(false);
    const [openDash, setOpenDash] = useState(false);
    const location = useLocation();
+   const navigate = useNavigate();
    const { currentUser } = useContext(AuthContext);
-   const yes = true;
-   const no = true;
-   // let no;
 
    const handleClickLogin = event => {
       setShowLoginLinks(event.currentTarget);
@@ -98,6 +96,14 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
       getEbook(); // eslint-disable-next-line
    }, []);
 
+   const handleCompleted = async isCompleted => {
+      await updateDoc(doc(db, "userchats", currentUser.uid), {
+         [location.state.id + ".completed"]: isCompleted,
+      });
+      handleCloseDash();
+      navigate("/dashboard");
+   };
+
    const { ebook, title, author, description } = ebookDetails;
    // console.log(ebookDetails);
 
@@ -149,12 +155,12 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
                      </DialogContentText>
                   </DialogContent>
                   <DialogActions>
-                     <Link to="/dashboard" state={{ no: no }}>
-                        <Button onClick={handleCloseDash}>No</Button>
-                     </Link>
-                     <Link to="/dashboard" state={{ yes: yes }}>
-                        <Button onClick={handleCloseDash}>Yes</Button>
-                     </Link>
+                     <Button onClick={() => handleCompleted("Not completed")}>
+                        No
+                     </Button>
+                     <Button onClick={() => handleCompleted("Completed")}>
+                        Yes
+                     </Button>
                   </DialogActions>
                </Dialog>
                <Box

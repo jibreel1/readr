@@ -8,7 +8,7 @@ import {
    Divider,
 } from "@mui/material";
 import { NotificationsNone } from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase-config";
 import { AuthContext } from "../context/AuthContext";
@@ -20,10 +20,7 @@ import Notifications from "../components/Notifications";
 const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
    const [dashInfo, setDashInfo] = useState([]);
    const [showNotify, setShowNotify] = useState(null);
-   const location = useLocation();
    const { currentUser } = useContext(AuthContext);
-   const yes = location.state.yes;
-   // console.log(yes);
 
    const handleClick = event => {
       setShowLoginLinks(event.currentTarget);
@@ -149,7 +146,7 @@ const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
                ?.sort((a, b) => b[1].date - a[1].date)
                .map(info => (
                   <div key={info[0]}>
-                     <DashboardItem info={info} yes={yes} />
+                     <DashboardItem info={info} />
                      <Divider sx={{ borderColor: "#fff", height: "5px" }} />
                   </div>
                ))}

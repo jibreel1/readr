@@ -1,9 +1,8 @@
 import { Box, Typography, Rating, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const DashboardItem = ({ info, yes }) => {
+const DashboardItem = ({ info }) => {
    const rating = info[1].ebookDetails.rating;
-   // console.log(yes);
    return (
       <Box
          display="flex"
@@ -63,15 +62,20 @@ const DashboardItem = ({ info, yes }) => {
                fontSize="inherit"
                sx={{
                   bgcolor:
-                     yes === true
+                     info[1].completed === "Completed"
                         ? { xs: "none", sm: "#00ff004d" }
                         : { xs: "none", sm: "#ff00004d" },
                   display: "inline-block",
                   p: { xs: "0", sm: "5px 10px" },
                   borderRadius: "20px",
+                  color:
+                     info[1].completed === "Completed"
+                        ? { xs: "green", sm: "inherit" }
+                        : { xs: "red", sm: "inherit" },
+                  fontWeight: { xs: "700", sm: "inherit" },
                }}
             >
-               {yes === true ? "Completed" : "Not completed"}
+               {info[1].completed}
             </Typography>
          </Box>
          <Box flex="1">
@@ -84,7 +88,7 @@ const DashboardItem = ({ info, yes }) => {
                      p: "5px 10px",
                   }}
                >
-                  {yes === true ? "Read" : "Continue"}
+                  {info[1].completed === "Completed" ? "Read" : "Continue"}
                </Button>
             </Link>
          </Box>
