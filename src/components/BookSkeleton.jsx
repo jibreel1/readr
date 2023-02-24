@@ -9,9 +9,10 @@ const BookSkeleton = () => {
             justifyContent="center"
             width="200px"
          >
-            <Skeleton variant="rectangular" width={200} height={300} />
+            <Skeleton variant="rectangular" width={200} height={260} />
             <Box sx={{ pt: 0.5 }}>
                <Skeleton />
+               <Skeleton width="60%" />
                <Skeleton width="60%" />
             </Box>
          </Box>
@@ -21,9 +22,10 @@ const BookSkeleton = () => {
             justifyContent="center"
             width="200px"
          >
-            <Skeleton variant="rectangular" width={200} height={300} />
+            <Skeleton variant="rectangular" width={200} height={260} />
             <Box sx={{ pt: 0.5 }}>
                <Skeleton />
+               <Skeleton width="60%" />
                <Skeleton width="60%" />
             </Box>
          </Box>
@@ -33,9 +35,23 @@ const BookSkeleton = () => {
             justifyContent="center"
             width="200px"
          >
-            <Skeleton variant="rectangular" width={200} height={300} />
+            <Skeleton variant="rectangular" width={200} height={260} />
             <Box sx={{ pt: 0.5 }}>
                <Skeleton />
+               <Skeleton width="60%" />
+               <Skeleton width="60%" />
+            </Box>
+         </Box>
+         <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            width="200px"
+         >
+            <Skeleton variant="rectangular" width={200} height={260} />
+            <Box sx={{ pt: 0.5 }}>
+               <Skeleton />
+               <Skeleton width="60%" />
                <Skeleton width="60%" />
             </Box>
          </Box>

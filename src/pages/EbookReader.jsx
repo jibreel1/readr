@@ -9,6 +9,7 @@ import {
    DialogTitle,
    DialogContentText,
    DialogActions,
+   Skeleton,
 } from "@mui/material";
 import {
    CloseOutlined,
@@ -36,6 +37,7 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
    const [ebookDetails, setEbookDetails] = useState({});
    const [open, setOpen] = useState(false);
    const [openDash, setOpenDash] = useState(false);
+   const [loading, setLoading] = useState(false);
    const location = useLocation();
    const navigate = useNavigate();
    const { currentUser } = useContext(AuthContext);
@@ -63,7 +65,7 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
    const ebookRef = doc(db, "books", location.state.id);
    useEffect(() => {
       const getEbook = async () => {
-         // setLoading(true);
+         setLoading(true);
          const docSnap = await getDoc(ebookRef);
          setEbookDetails(docSnap.data());
 
@@ -91,7 +93,7 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
          } catch (err) {
             console.log(err);
          }
-         // setLoading(false);
+         setLoading(false);
       };
       getEbook(); // eslint-disable-next-line
    }, []);
@@ -247,12 +249,22 @@ const EbookReader = ({ showLoginLinks, setShowLoginLinks }) => {
                      lineHeight: "1.2",
                   }}
                >
-                  {title}
+                  {loading ? <Skeleton /> : title}
                </Typography>
                <Typography component="p" pb="20px">
-                  by {author}
+                  {loading ? <Skeleton /> : `by ${author}`}
                </Typography>
-               <Typography component="em">{description}</Typography>
+               <Typography component="em">
+                  {loading ? (
+                     <>
+                        <Skeleton />
+                        <Skeleton width="80%" />
+                        <Skeleton width="60%" />
+                     </>
+                  ) : (
+                     description
+                  )}
+               </Typography>
             </Box>
             <LoginDropDown
                showLoginLinks={showLoginLinks}

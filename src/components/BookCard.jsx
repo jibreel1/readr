@@ -18,7 +18,11 @@ const BookCard = ({ book }) => {
             title={book.title}
          />
          <CardContent>
-            <Typography component="h3" height="48px" sx={{ fontWeight: "700" }}>
+            <Typography
+               component="h3"
+               minHeight="48px"
+               sx={{ fontWeight: "700" }}
+            >
                {book.title}
             </Typography>
             <Typography my="10px" sx={{ fontSize: "14px", color: "#555" }}>
