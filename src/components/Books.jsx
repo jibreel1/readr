@@ -1,6 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import BookCard from "./BookCard";
 import BookSkeleton from "./BookSkeleton";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import { Link } from "react-router-dom";
 
 const Books = ({ books, isLoading }) => {
    return (
@@ -20,17 +22,27 @@ const Books = ({ books, isLoading }) => {
          {isLoading ? (
             <BookSkeleton />
          ) : (
-            <Box
-               display="flex"
-               flexWrap="wrap"
-               gap="30px"
-               justifyContent="center"
-            >
-               {books.map(book => (
-                  <BookCard book={book} key={book.id} />
-               ))}
-            </Box>
+            <ScrollMenu>
+               <Box
+                  display="flex"
+                  gap="30px"
+                  justifyContent="center"
+                  sx={{ flexWrap: { sm: "wrap" } }}
+               >
+                  {books.slice(0, 6).map(book => (
+                     <BookCard book={book} key={book.id} />
+                  ))}
+               </Box>
+            </ScrollMenu>
          )}
+         <Link
+            to="/ebooks"
+            style={{ display: "flex", justifyContent: "center" }}
+         >
+            <Button variant="contained" sx={{ mt: "30px" }}>
+               View more
+            </Button>
+         </Link>
       </Box>
    );
 };

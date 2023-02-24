@@ -509,3 +509,19 @@ h2 {
       display: none;
    }
 }
+
+.react-horizontal-scrolling-menu--item {
+   height: 460px;
+
+   @media screen and (min-width: 600px) {
+      height: inherit;
+   }
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+   padding-inline: 20px;
+
+   @media screen and (min-width: 600px) {
+      justify-content: center;
+   }
+}

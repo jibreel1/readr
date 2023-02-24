@@ -75,7 +75,9 @@ const DashboardItem = ({ info }) => {
                   fontWeight: { xs: "700", sm: "inherit" },
                }}
             >
-               {info[1].completed}
+               {info[1].completed === "Completed"
+                  ? "Completed"
+                  : "Not completed"}
             </Typography>
          </Box>
          <Box flex="1">
