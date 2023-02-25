@@ -2,9 +2,10 @@ import { Box, Typography, Button } from "@mui/material";
 import BookCard from "./BookCard";
 import BookSkeleton from "./BookSkeleton";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Books = ({ books, isLoading }) => {
+   const navigate = useNavigate();
    return (
       <Box py="80px" backgroundColor="rgb(248, 249, 253)">
          <Typography
@@ -30,19 +31,20 @@ const Books = ({ books, isLoading }) => {
                   sx={{ flexWrap: { sm: "wrap" } }}
                >
                   {books.slice(0, 6).map(book => (
-                     <BookCard book={book} key={book.id} />
+                     <BookCard
+                        book={book}
+                        key={book.id}
+                        isLoading={isLoading}
+                     />
                   ))}
                </Box>
             </ScrollMenu>
          )}
-         <Link
-            to="/ebooks"
-            style={{ display: "flex", justifyContent: "center" }}
-         >
-            <Button variant="contained" sx={{ mt: "30px" }}>
+         <Box sx={{ mt: "30px", display: "flex", justifyContent: "center" }}>
+            <Button variant="contained" onClick={() => navigate("/ebooks")}>
                View more
             </Button>
-         </Link>
+         </Box>
       </Box>
    );
 };

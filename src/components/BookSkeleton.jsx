@@ -2,9 +2,14 @@ import { Box, Skeleton } from "@mui/material";
 
 const BookSkeleton = () => {
    return (
-      <Box display="flex" flexWrap="wrap" gap="30px" justifyContent="center">
+      <Box
+         display="flex"
+         flexWrap="wrap"
+         justifyContent="center"
+         sx={{ gap: { xs: "10px", sm: "30px" } }}
+      >
          <Box
-            display="flex"
+            sx={{ display: { xs: "none", sm: "flex" } }}
             flexDirection="column"
             justifyContent="center"
             width="200px"
@@ -17,7 +22,7 @@ const BookSkeleton = () => {
             </Box>
          </Box>
          <Box
-            display="flex"
+            sx={{ display: { xs: "none", sm: "flex" } }}
             flexDirection="column"
             justifyContent="center"
             width="200px"

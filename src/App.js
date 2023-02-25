@@ -109,7 +109,10 @@ const App = () => {
                      </ProtectedRoute>
                   }
                />
-               <Route path="/ebooks" element={<Ebooks books={books} />} />
+               <Route
+                  path="/ebooks"
+                  element={<Ebooks books={books} isLoading={loading} />}
+               />
             </Route>
          </Routes>
       </>

@@ -54,7 +54,7 @@ const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            height="50px"
+            height="55px"
             sx={{
                px: { xs: "15px", sm: "35px" },
             }}
@@ -71,25 +71,14 @@ const Dashboard = ({ showLoginLinks, setShowLoginLinks }) => {
             </Box>
             <Box display="flex" alignItems="center" gap="20px">
                <TextField
-                  id="standard-search"
-                  label="Search"
                   type="search"
                   width="300px"
+                  size="small"
                   sx={{
-                     // height: "40px",
                      display: { xs: "none", sm: "block" },
-                     "& .MuiInputBase-input": {
-                        padding: "10px 7px",
-                        height: "20px",
-                     },
                   }}
                />
-               <Badge
-                  badgeContent={"1"}
-                  overlap="circular"
-                  // variant="dot"
-                  color="error"
-               >
+               <Badge badgeContent={"1"} overlap="circular" color="error">
                   <NotificationsNone
                      cursor="pointer"
                      onClick={handleClickNotify}

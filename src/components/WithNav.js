@@ -12,17 +12,17 @@ const WithNav = ({ showLoginLinks, setShowLoginLinks }) => {
       {
          id: "2",
          name: "Features",
-         path: "#features",
+         path: "/features",
       },
       {
          id: "3",
          name: "About",
-         path: "#about",
+         path: "/about",
       },
       {
          id: "4",
          name: "Contact",
-         path: "#!contact",
+         path: "/contact",
       },
    ];
    return (
