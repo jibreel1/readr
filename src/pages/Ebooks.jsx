@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import BookCard from "../components/BookCard";
 import BookSkeleton from "../components/BookSkeleton";
+import { ArrowCircleRightOutlined } from "@mui/icons-material";
 
 const Ebooks = ({ books, isLoading }) => {
    const [searchByTitle, setSearchByTitle] = useState("");
@@ -20,37 +21,61 @@ const Ebooks = ({ books, isLoading }) => {
             <Box
                color="#fff"
                zIndex="2"
-               sx={{
-                  flexDirection: { xs: "column", sm: "row-reverse" },
-               }}
                display="flex"
                alignItems="center"
                gap="20px"
+               sx={{
+                  flexDirection: { xs: "column", sm: "row-reverse" },
+               }}
             >
                <Typography
                   component="h3"
                   flex="1"
                   fontWeight="700"
-                  sx={{ fontSize: { xs: "45px", sm: "56px", lg: "64px" } }}
+                  sx={{
+                     fontSize: { xs: "45px", sm: "56px", lg: "64px" },
+                     lineHeight: { xs: "1.2", sm: "1.5" },
+                  }}
                >
                   Every book personally chosen.
                </Typography>
-               <Typography
-                  component="p"
-                  fontWeight="300"
-                  lineHeight="2"
+               <Box
                   flex="1"
-                  sx={{
-                     fontSize: { xs: "14px", md: "16px" },
-                     textAlign: { xs: "left", sm: "right" },
-                     textDecoration: "underline",
-                  }}
+                  display="flex"
+                  gap="16px"
+                  flexDirection="column"
+                  sx={{ alignItems: { xs: "flex-start", sm: "flex-end" } }}
                >
-                  One of the many gifts that books gives readers is a connection
-                  to each other. When we share an affection for a writer, an
-                  author or a story, we also have a better understanding of
-                  people unlike ourselves. Books cultivate empathy.
-               </Typography>
+                  <Typography
+                     component="p"
+                     fontWeight="300"
+                     sx={{
+                        fontSize: { xs: "14px", md: "16px" },
+                        textAlign: { xs: "left", sm: "right" },
+                        textDecoration: { xs: "none", sm: "underline" },
+                        lineHeight: "2",
+                     }}
+                  >
+                     One of the many gifts that books gives readers is a
+                     connection to each other. When we share an affection for a
+                     writer, an author or a story, we also have a better
+                     understanding of people unlike ourselves.
+                  </Typography>
+                  <Typography
+                     component="span"
+                     display="flex"
+                     gap="20px"
+                     sx={{
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                     }}
+                     onClick={() => {
+                        window.scrollTo({ top: 700, behavior: "smooth" });
+                     }}
+                  >
+                     View books <ArrowCircleRightOutlined />
+                  </Typography>
+               </Box>
             </Box>
          </Box>
          <Box

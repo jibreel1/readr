@@ -31,17 +31,19 @@ const Books = ({ books, isLoading }) => {
                   sx={{ flexWrap: { sm: "wrap" } }}
                >
                   {books.slice(0, 6).map(book => (
-                     <BookCard
-                        book={book}
-                        key={book.id}
-                        isLoading={isLoading}
-                     />
+                     <BookCard book={book} key={book.id} />
                   ))}
                </Box>
             </ScrollMenu>
          )}
          <Box sx={{ mt: "30px", display: "flex", justifyContent: "center" }}>
-            <Button variant="contained" onClick={() => navigate("/ebooks")}>
+            <Button
+               variant="contained"
+               onClick={() => {
+                  navigate("/ebooks");
+                  window.scrollTo({ top: 0 });
+               }}
+            >
                View more
             </Button>
          </Box>
