@@ -8,6 +8,14 @@ const Ebooks = ({ books, isLoading }) => {
    const [searchByTitle, setSearchByTitle] = useState("");
    const [searchByAuthor, setSearchByAuthor] = useState("");
 
+   books.sort(function (a, b) {
+      if (a.title < b.title) {
+         return -1;
+      } else if (a.title > b.title) {
+         return 1;
+      } else return 0;
+   });
+
    return (
       <div className="books">
          <Box
